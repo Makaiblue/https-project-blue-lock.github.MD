@@ -1,0 +1,1763 @@
+              <!DOCTYPE html>
+              <html lang="pt-br">
+              <head>
+                <meta charset="UTF-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <title>Blue Lock - Liga Neo Egoísta</title>
+
+                <!-- Bootstrap -->
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+                <!-- Icons -->
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+                <!-- Fonts -->
+                <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+                <style>
+                  /* ================= THEME TOKENS ================= */
+                  :root{
+                    --bg: #eef4ff;
+                    --bg-hero: radial-gradient(1200px 600px at 20% -10%, #8ec5ff33, transparent 70%), radial-gradient(1200px 600px at 120% -20%, #b1ffd633, transparent 70%), linear-gradient(180deg, #f7fbff 0%, #eef4ff 100%);
+                    --text: #0b1220;
+                    --muted: #52607a;
+                    --card: #ffffff;
+                    --card-border: #e7edf8;
+                    --accent: #0d6efd;
+                    --accent-2: #22c55e;
+                    --table-header: #0b1220;
+                    --table-header-text:#ffffff;
+                    --link: #0a58ca;
+                    --shadow: 0 8px 24px rgba(2, 6, 23, .06);
+                  }
+                  .dark-mode:root,
+                  body.dark-mode{
+                    --bg: #0b1220;
+                    --bg-hero: radial-gradient(1200px 600px at 20% -10%, #1b2a4a66, transparent 70%), radial-gradient(1200px 600px at 120% -20%, #183c2e66, transparent 70%), linear-gradient(180deg, #0b1220 0%, #0b1220 100%);
+                    --text: #f3f6fc;
+                    --muted: #b8c4d9;
+                    --card: #121a2b;
+                    --card-border: #1d2841;
+                    --accent: #60a5fa;
+                    --accent-2: #34d399;
+                    --table-header: #121a2b;
+                    --table-header-text:#e6eefc;
+                    --link: #8ab4ff;
+                    --shadow: 0 8px 24px rgba(0,0,0,.35);
+                  }
+
+                  /* ================= BASE ================= */
+                  html,body{
+                    height:100%;
+                  }
+                  body{
+                    background: var(--bg);
+                    color: var(--text);
+                    font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+                    line-height: 1.6;
+                    transition: background .25s ease, color .25s ease;
+                  }
+                  h1,h2,h3,.brand{
+                    font-family: 'Bebas Neue', cursive;
+                    letter-spacing: .5px;
+                  }
+                  a{ color: var(--link); }
+                  .container-narrow{ max-width: 1100px; }
+
+                  /* ================= NAVBAR ================= */
+                  .navbar{
+                    background: rgba(12, 23, 41, .92);
+                    backdrop-filter: blur(6px);
+                    border-bottom: 1px solid #0f203a;
+                  }
+                  .navbar .navbar-brand{
+                    font-family: 'Bebas Neue', cursive;
+                    font-size: 1.6rem;
+                    letter-spacing: .6px;
+                  }
+                  .theme-btn{
+                    border-radius: 999px;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: .5rem;
+                  }
+
+                  /* ================= HERO ================= */
+                  .hero{
+                    background: var(--bg-hero);
+                    border-bottom: 1px solid var(--card-border);
+                  }
+                  .hero .card{
+                    background: var(--card);
+                    border: 1px solid var(--card-border);
+                    box-shadow: var(--shadow);
+                  }
+                  .hero-badge{
+                    display:inline-flex; align-items:center; gap:.5rem;
+                    background: rgba(13,110,253,.1);
+                    color: var(--accent);
+                    border:1px solid rgba(13,110,253,.2);
+                    padding:.25rem .6rem; border-radius:999px; font-weight:600; font-size:.9rem;
+                  }
+
+                  /* ================= SECTIONS / CARDS ================= */
+                  .section{
+                    margin-top: 2.5rem;
+                  }
+                  .elevated{
+                    background: var(--card);
+                    border: 1px solid var(--card-border);
+                    border-radius: 16px;
+                    box-shadow: var(--shadow);
+                    overflow: hidden;
+                  }
+                  .section-title{
+                    display:flex; align-items:center; gap:.6rem; margin-bottom: .75rem;
+                  }
+                  .section-sub{
+                    color: var(--muted); margin-bottom: 1rem;
+                  }
+
+                  /* ================= TABLE ================= */
+                  .table-wrap{
+                    border: 1px solid var(--card-border);
+                    border-radius: 14px;
+                    overflow: hidden;
+                    background: var(--card);
+                    box-shadow: var(--shadow);
+                  }
+                  table thead th{
+                    background: var(--table-header) !important;
+                    color: var(--table-header-text) !important;
+                    border-color: var(--card-border) !important;
+                  }
+                  table tbody tr{
+                    transition: background .2s ease;
+                  }
+                  table tbody tr:hover{
+                    background: rgba(13,110,253,.06);
+                  }
+
+                  /* ================= TIMELINE ================= */
+                  .timeline{
+                    list-style:none; margin:0; padding-left: 22px;
+                    border-left: 3px solid rgba(13,110,253,.35);
+                  }
+                  .timeline li{
+                    position:relative; margin: 10px 0; color: var(--text);
+                  }
+                  .timeline li::before{
+                    content:"⚽"; position:absolute; left:-1.2em;
+                  }
+
+                  /* ================= UTIL: HOVER/FOCUS ================= */
+                  .btn, .card, .form-select, .nav-link { transition: transform .16s ease, background .2s ease, border-color .2s ease, color .2s ease; }
+                  .btn:hover, .card:hover, .form-select:hover, .nav-link:hover { transform: translateY(-2px); }
+
+                  /* ================= MEDIA ================= */
+                  .cover{
+                    max-width:420px; border-radius: 14px; border:1px solid var(--card-border); box-shadow: var(--shadow);
+                  }
+
+                  /* ================= FOOTER ================= */
+                  footer{
+                    color: var(--muted);
+                    border-top:1px solid var(--card-border);
+                    padding: 28px 0;
+                    margin-top: 48px;
+                    text-align:center;
+                  }
+                </style>
+              </head>
+              <body>
+           
+
+                <!-- NAVBAR -->
+                <nav class="navbar navbar-dark sticky-top">
+                  <div class="container container-narrow d-flex align-items-center justify-content-between py-2">
+                    <a class="navbar-brand d-flex align-items-center gap-2 text-white brand" href="#">
+                      <i class="bi bi-lightning-charge-fill"></i> Blue Lock
+                    </a>
+                    <div class="d-flex align-items-center gap-3">
+                      <a href="personagens.html">Personagens</a>
+                      <a href="DreamSquad.html">Dream Squad</a>
+
+                      <button id="themeToggle" class="btn btn-outline-light btn-sm theme-btn" type="button">
+                        <i class="bi bi-moon-stars"></i> <span>Modo escuro</span>
+                      </button>
+                    </div>
+                  </div>
+                </nav>
+
+                <style>
+                  /* ================= HERO ================= */
+                  .hero{
+                    background: linear-gradient(135deg, #0b1220 0%, #1a2d4d 100%);
+                    border-bottom: 1px solid var(--card-border);
+                    position: relative;
+                    overflow: hidden;
+                    padding: 80px 0;
+                  }
+                  .hero::before {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.03"><text x="50%" y="50%" font-family="Arial" font-size="10" fill="%23ffffff" text-anchor="middle" dominant-baseline="middle">BLUE LOCK</text></svg>');
+                    opacity: 0.1;
+                    z-index: 0;
+                  }
+                  .hero .container {
+                    position: relative;
+                    z-index: 1;
+                  }
+                  .hero-badge{
+                    display:inline-flex; 
+                    align-items:center; 
+                    gap:.5rem;
+                    background: rgba(255, 215, 0, 0.15);
+                    color: #ffd700;
+                    border: 2px solid #ffd700;
+                    padding:.5rem 1rem; 
+                    border-radius: 50px; 
+                    font-weight: 700; 
+                    font-size:.9rem;
+                    margin-bottom: 1.5rem;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                  }
+
+                  .hero-title {
+                    font-family: 'Bebas Neue', cursive;
+                    font-size: 4.5rem;
+                    line-height: 1.1;
+                    margin-bottom: 1.5rem;
+                    color: #ffffff;
+                    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+                  }
+
+                  .hero-subtitle {
+                    font-size: 1.4rem;
+                    font-weight: 500;
+                    color: #ffd700;
+                    margin-bottom: 1.5rem;
+                    max-width: 600px;
+                  }
+
+                  .hero-description {
+                    font-size: 1.2rem;
+                    color: #e6eefc;
+                    margin-bottom: 2rem;
+                    max-width: 700px;
+                    line-height: 1.6;
+                  }
+
+                  /* ================= FEATURE LIST ================= */
+                  .feature-list {
+                    list-style: none;
+                    padding: 0;
+                    margin-bottom: 2.5rem;
+                  }
+                  .feature-list li {
+                    margin-bottom: 0.8rem;
+                    padding-left: 2rem;
+                    position: relative;
+                    font-size: 1.1rem;
+                    color: #e6eefc;
+                  }
+                  .feature-list li::before {
+                    content: "✓";
+                    position: absolute;
+                    left: 0;
+                    color: #ffd700;
+                    font-weight: bold;
+                    font-size: 1.2rem;
+                  }
+                </style>
+              
+
+                <!-- HERO -->
+                <header class="hero">
+                  <div class="container container-narrow">
+                    <div class="row g-5 align-items-center">
+                      <div class="col-lg-7">
+                        <span class="hero-badge"><i class="bi bi-trophy-fill"></i> Liga Neo Egoísta</span>
+
+                        <h1 class="hero-title">PORTAL BLUE LOCK</h1>
+
+                        <p class="hero-subtitle">
+                          A revolução do futebol começa aqui
+                        </p>
+
+                        <p class="hero-description">
+                          Descubra o projeto que está transformando o futebol mundial através do egoísmo calculado. 
+                          Blue Lock não é apenas um centro de treinamento - é uma filosofia que desafia tudo o que 
+                          sabemos sobre o esporte mais popular do planeta.
+                        </p>
+
+                    
+                      <div class="col-lg-5 text-center">
+                        <img class="img-fluid cover pulse" src="https://upload.wikimedia.org/wikipedia/pt/1/1c/Blue_Lock_-_capa_do_volume_1.jpg" alt="Capa Volume 1 Blue Lock">
+                        
+                      </div>
+                    </div>
+                  </div>
+                </header>
+
+                  <!-- ==================== TABELA DE JOGOS ==================== -->
+                  <section id="tabela" class="section">
+                    <div class="section-title">
+                      <i class="bi bi-trophy fs-3 text-primary"></i>
+                      <h2 class="m-0">Liga Neo Egoísta – Tabela de Jogos</h2>
+                    </div>
+                    <p class="section-sub">Clique/arraste horizontalmente no celular para ver toda a tabela.</p>
+
+                    <div class="table-wrap">
+                      <div class="table-responsive">
+                        <table class="table table-hover align-middle m-0">
+                          <thead>
+                            <tr>
+                              <th>Partida</th>
+                              <th>Times</th>
+                              <th>Resultado</th>
+                              <th>Goleadores / Assistências</th>
+                              <th>Capítulos</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>1</td>
+                              <td>Bastard Munique vs FC Barcha</td>
+                              <td><span class="badge text-bg-success">3 - 2</span></td>
+                              <td>Kaiser (Ness), Noa (Kaiser), Kunigami (Isagi) | Bachira (Otoya), Lavinho (Bachira)</td>
+                              <td>159 – 167</td>
+                            </tr>
+                            <tr>
+                              <td>2</td>
+                              <td>Ubers vs Paris X Gen</td>
+                              <td><span class="badge text-bg-warning">2 - 3</span></td>
+                              <td>Rin, Shido, Rin | <em>Sem dados dos gols da Ubers</em></td>
+                              <td>169</td>
+                            </tr>
+                            <tr>
+                              <td>3</td>
+                              <td>Bastard Munique vs Manshine City</td>
+                              <td><span class="badge text-bg-success">3 - 2</span></td>
+                              <td>Kaiser (Ness), Kunigami (Isagi), Yukimiya (Isagi) | Chigiri, Nagi (Reo)</td>
+                              <td>174 – 202</td>
+                            </tr>
+                            <tr>
+                              <td>4</td>
+                              <td>FC Barcha vs Ubers</td>
+                              <td><span class="badge text-bg-danger">1 - 3</span></td>
+                              <td>Bachira | Baro (3 – Sendo, Niko)</td>
+                              <td>204</td>
+                            </tr>
+                            <tr>
+                              <td>5</td>
+                              <td>Bastard Munique vs Ubers</td>
+                              <td><span class="badge text-bg-success">3 - 2</span></td>
+                              <td>Isagi (Kurona, Hiori), Kaiser (Isagi) | Baro (2 – Sendo, Niko)</td>
+                              <td>210 – 238</td>
+                            </tr>
+                            <tr>
+                              <td>6</td>
+                              <td>Manshine City vs Paris X Gen</td>
+                              <td><span class="badge text-bg-danger">1 - 3</span></td>
+                              <td>Chigiri | Rin (3)</td>
+                              <td>239</td>
+                            </tr>
+                            <tr>
+                              <td>7</td>
+                              <td>FC Barcha vs Paris X Gen</td>
+                              <td><span class="badge text-bg-warning">2 - 3</span></td>
+                              <td>Bachira (Lavinho), Otoya (Lavinho) | Rin (Charles), Shido (2 – Charles)</td>
+                              <td>244 – 245</td>
+                            </tr>
+                            <tr>
+                              <td>8</td>
+                              <td>Manshine City vs Ubers</td>
+                              <td><span class="badge text-bg-danger">1 - 3</span></td>
+                              <td>Sem dados | Baro (2), Sendo</td>
+                              <td>244 – 245</td>
+                            </tr>
+                            <tr>
+                              <td>9</td>
+                              <td>FC Barcha vs Manshine City</td>
+                              <td><span class="badge text-bg-success">3 - 2</span></td>
+                              <td>Bachira (2 – Lavinho), Otoya (Bachira) | Chigiri (Reo), Reo (Chris)</td>
+                              <td>295 – 298</td>
+                            </tr>
+                            <tr>
+                              <td>10</td>
+                              <td>Bastard Munique vs Paris X Gen</td>
+                              <td><span class="badge text-bg-success">3 - 2</span></td>
+                              <td>Isagi (2 – Kunigami, Ness), Kaiser (Kiyora) | Shido (Charles), Rin (Charles)</td>
+                              <td>249 – 293</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </section>
+
+               
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Partidas - Blue Lock</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0a0a2a 0%, #1a1a4a 100%);
+            min-height: 100vh;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .bg-blue-lock {
+            background: linear-gradient(135deg, #0a0a2a 0%, #1a1a4a 100%);
+            border: 2px solid #00f5ff;
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
+        }
+        
+        .logo-container {
+            width: 100px;
+            height: 100px;
+            border: 2px solid #00f5ff;
+            border-radius: 12px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            background-color: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px auto;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .logo-container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 245, 255, 0.5);
+        }
+        
+        .team-logo {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: none;
+        }
+        
+        .fallback-emblem {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        .emblem-bastard {
+            background: linear-gradient(135deg, #000000, #2d2d2d);
+            border: 2px solid #ff0000;
+        }
+        
+        .emblem-ubers {
+            background: linear-gradient(135deg, #0000ff, #4444ff);
+            border: 2px solid #ffffff;
+        }
+        
+        .emblem-paris {
+            background: linear-gradient(135deg, #ff0000, #ff8800);
+            border: 2px solid #ffffff;
+        }
+        
+        .emblem-barcha {
+            background: linear-gradient(135deg, #ff0000, #0000ff);
+            border: 2px solid #ffff00;
+        }
+        
+        .emblem-manshine {
+            background: linear-gradient(135deg, #00aa00, #00ff00);
+            border: 2px solid #ffffff;
+        }
+        
+        .small-logo {
+            width: 50px;
+            height: 50px;
+            margin: 0 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .small-emblem {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        
+        .team-result {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        select.form-select {
+            cursor: pointer;
+            transition: all 0.3s;
+            background-color: rgba(0, 0, 0, 0.3) !important;
+            color: white !important;
+            border: 1px solid #00f5ff;
+        }
+        
+        select.form-select:focus {
+            border-color: #00f5ff;
+            box-shadow: 0 0 0 0.25rem rgba(0, 245, 255, 0.25);
+            background-color: rgba(0, 0, 0, 0.5) !important;
+        }
+        
+        #simular-btn {
+            transition: all 0.3s;
+            background: linear-gradient(to right, #00f5ff, #00b3c5);
+            border: none;
+            color: #0a0a2a;
+            font-weight: bold;
+        }
+        
+        #simular-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 245, 255, 0.4);
+        }
+        
+        .vs-text {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00f5ff;
+            text-shadow: 0 0 10px rgba(0, 245, 255, 0.7);
+        }
+        
+        .score-display {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #00f5ff;
+            text-shadow: 0 0 15px rgba(0, 245, 255, 0.5);
+        }
+        
+        .winner-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(to right, #00f5ff, #ffcc00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
+        }
+        
+        .pulse {
+            animation: pulse-animation 2s infinite;
+        }
+        
+        @keyframes pulse-animation {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .goal-animation {
+            animation: goal-animation 1s ease-out;
+        }
+        
+        @keyframes goal-animation {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.5); }
+            100% { transform: scale(1); }
+        }
+        
+        .stadium-bg {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stadium-bg::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.03"><rect width="100" height="100" fill="none" stroke="%2300f5ff" stroke-width="2"/><circle cx="50" cy="50" r="40" fill="none" stroke="%2300f5ff" stroke-width="1"/><line x1="50" y1="0" x2="50" y2="100" stroke="%2300f5ff" stroke-width="1"/><circle cx="50" cy="50" r="10" fill="none" stroke="%2300f5ff" stroke-width="1"/></svg>');
+            background-repeat: repeat;
+            opacity: 0.1;
+            z-index: -1;
+        }
+        
+        .img-loading {
+            filter: blur(5px);
+            opacity: 0.7;
+        }
+        
+        .img-loaded {
+            filter: blur(0);
+            opacity: 1;
+            transition: filter 0.5s, opacity 0.5s;
+        }
+        
+        .loading-spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="p-4 bg-blue-lock text-light rounded-3 shadow h-100 stadium-bg">
+                    <div class="section-title mb-4 text-center">
+                        <i class="bi bi-controller fs-1 text-warning pulse"></i>
+                        <h2 class="m-0 fw-bold text-warning mt-2">Simulador de Partidas Blue Lock</h2>
+                        <p class="text-light mt-2">Selecione dois times diferentes e simule uma partida emocionante!</p>
+                    </div>
+
+                    <div class="row g-4 mb-3 justify-content-center">
+                        <!-- Time 1 -->
+                        <div class="col-md-5 text-center">
+                            <label class="form-label fw-bold text-info">Time 1</label>
+                            <select id="time1" class="form-select mb-2">
+                                <option value="Bastard Munchen">Bastard Munchen</option>
+                                <option value="Paris X Gen">Paris X Gen</option>
+                                <option value="Ubers">Ubers</option>
+                                <option value="Barcha FC">Barcha FC</option>
+                                <option value="Manshine City">Manshine City</option>
+                            </select>
+                            <div class="logo-container">
+                                <img id="logo1-img" class="team-logo" alt="Bastard Munchen">
+                                <div id="logo1-fallback" class="fallback-emblem emblem-bastard">BM</div>
+                            </div>
+                            <p class="fw-semibold mt-2 text-warning" id="nome-time1">Bastard Munchen</p>
+                        </div>
+
+                        <div class="col-md-2 d-flex align-items-center justify-content-center">
+                            <span class="vs-text">VS</span>
+                        </div>
+
+                        <!-- Time 2 -->
+                        <div class="col-md-5 text-center">
+                            <label class="form-label fw-bold text-info">Time 2</label>
+                            <select id="time2" class="form-select mb-2">
+                                <option value="Paris X Gen">Paris X Gen</option>
+                                <option value="Bastard Munchen">Bastard Munchen</option>
+                                <option value="Ubers">Ubers</option>
+                                <option value="Barcha FC">Barcha FC</option>
+                                <option value="Manshine City">Manshine City</option>
+                            </select>
+                            <div class="logo-container">
+                                <img id="logo2-img" class="team-logo" alt="Paris X Gen">
+                                <div id="logo2-fallback" class="fallback-emblem emblem-paris">PXG</div>
+                            </div>
+                            <p class="fw-semibold mt-2 text-warning" id="nome-time2">Paris X Gen</p>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button id="simular-btn" class="btn btn-lg px-4 fw-bold" onclick="simular()">
+                            <i class="bi bi-play-circle"></i> Simular Partida
+                        </button>
+                        <div id="loading" class="mt-3 d-none">
+                            <div class="spinner-border text-info" role="status">
+                                <span class="visually-hidden">Simulando...</span>
+                            </div>
+                            <p class="mt-2 text-info">Calculando resultado...</p>
+                        </div>
+                        <div id="resultado-jogo" class="mt-4 p-3 bg-dark rounded d-none">
+                            <h3 class="fw-bold mb-2 text-warning">Resultado Final</h3>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <div class="team-result">
+                                    <div id="result-logo1" class="small-logo">
+                                        <div class="small-emblem emblem-bastard">BM</div>
+                                    </div>
+                                    <span class="score-display mx-2" id="gols1">0</span>
+                                </div>
+                                <span class="mx-3 score-display">X</span>
+                                <div class="team-result">
+                                    <span class="score-display mx-2" id="gols2">0</span>
+                                    <div id="result-logo2" class="small-logo">
+                                        <div class="small-emblem emblem-paris">PXG</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p id="vencedor" class="mt-3 winner-text"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ====== MAPA DE URLs (originais + suas novas imagens) ====== */
+        const logosOriginal = {
+          "Bastard Munchen":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4XQ2iY6K_feMY-rAR28Mpv9t5e4DswL_yIg&s",
+          "Ubers": "https://i.pinimg.com/474x/b9/10/5a/b9105a025a609751bb9282e4b59486c9.jpg",
+          "Manshine City": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTAtNlgpse0zOVe4FHYXQ7_y4G9scy_UmI-Q&s",
+          "Paris X Gen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKS5pGDpomisilzovYPFoR8aaZd8osrnovvrp3Mvn-reS_7rtg",
+          "Barcha FC": "https://preview.redd.it/i-colored-the-nel-teams-logos-based-off-their-irls-v0-bbbeh6yj78da1.png?width=640&crop=smart&auto=webp&s=3af4a4e75df1b9ce5a86a327da5efa7b4a6a3321"
+        };
+
+        /* ====== Emblemas fallback (estilizados) ====== */
+        const emblems = {
+          "Bastard Munchen": { class: "emblem-bastard", text: "BM" },
+          "Ubers": { class: "emblem-ubers", text: "UB" },
+          "Paris X Gen": { class: "emblem-paris", text: "PXG" },
+          "Barcha FC": { class: "emblem-barcha", text: "BA" },
+          "Manshine City": { class: "emblem-manshine", text: "MC" }
+        };
+
+        /* ====== Helper: cria URL do proxy (images.weserv.nl) ====== */
+        function getProxyUrl(url) {
+          if (!url) return url;
+          // remover protocolo e aplicar encode
+          const cleaned = url.replace(/^https?:\/\//, '');
+          // parametros: w/h/fit ajudam a manter tamanho
+          return 'https://images.weserv.nl/?url=' + encodeURIComponent(cleaned) + '&w=360&h=360&fit=contain';
+        }
+
+        /* ====== Tenta carregar imagem (retorna Promise<boolean>) ====== */
+        function tryLoad(src, imgEl) {
+          return new Promise((resolve) => {
+            const img = new Image();
+            // tenta com crossOrigin para reduzir chances de erro ao proxy
+            img.crossOrigin = 'anonymous';
+            img.onload = function () {
+              imgEl.src = src;
+              imgEl.style.display = 'block';
+              imgEl.classList.remove('img-loading');
+              imgEl.classList.add('img-loaded');
+              resolve(true);
+            };
+            img.onerror = function () {
+              resolve(false);
+            };
+            // inicio do load
+            img.src = src;
+          });
+        }
+
+        /* ====== Carregar imagem com fallback/proxy ====== */
+        async function carregarImagem(time, imgElement, fallbackElement) {
+          const original = logosOriginal[time];
+          if (!original) {
+            console.warn('Sem URL para o time:', time);
+            fallbackElement.style.display = 'flex';
+            fallbackElement.className = 'fallback-emblem';
+            fallbackElement.textContent = time.slice(0, 3).toUpperCase();
+            return false;
+          }
+
+          // prepara visual
+          imgElement.style.display = 'none';
+          fallbackElement.style.display = 'flex';
+          imgElement.classList.add('img-loading');
+
+          console.log('[logos] tentando direto ->', original);
+          const okDirect = await tryLoad(original, imgElement);
+          if (okDirect) {
+            console.log('[logos] carregou direto:', time);
+            fallbackElement.style.display = 'none';
+            return true;
+          }
+
+          // se falhou, tenta proxy (weserv)
+          const proxy = getProxyUrl(original);
+          console.log('[logos] direto falhou — tentando proxy ->', proxy);
+          const okProxy = await tryLoad(proxy, imgElement);
+          if (okProxy) {
+            console.log('[logos] carregou via proxy:', time);
+            fallbackElement.style.display = 'none';
+            return true;
+          }
+
+          // última alternativa: mostrar o fallback estilizado e logar
+          console.warn('[logos] todas tentativas falharam para', time, 'original:', original);
+          const emblemInfo = emblems[time] || { class: '', text: time.slice(0, 2).toUpperCase() };
+          fallbackElement.style.display = 'flex';
+          fallbackElement.className = 'fallback-emblem ' + (emblemInfo.class || '');
+          fallbackElement.textContent = emblemInfo.text;
+          imgElement.style.display = 'none';
+          imgElement.classList.remove('img-loading');
+          return false;
+        }
+
+        /* ====== Atualizar logo (select -> UI) ====== */
+        async function atualizarLogo(selectId, imgId, fallbackId, nomeId) {
+          const time = document.getElementById(selectId).value;
+          document.getElementById(nomeId).textContent = time;
+          const imgElement = document.getElementById(imgId);
+          const fallbackElement = document.getElementById(fallbackId);
+          await carregarImagem(time, imgElement, fallbackElement);
+        }
+
+        /* ====== Atualizar pequenos emblemas no resultado (mantém fallback visual) ====== */
+        function atualizarLogoResultado(time, logoId) {
+          const logoElement = document.getElementById(logoId);
+          logoElement.innerHTML = ''; // limpa
+          const emblemInfo = emblems[time] || { class: '', text: time.slice(0, 2).toUpperCase() };
+          const emblem = document.createElement('div');
+          emblem.className = 'small-emblem ' + (emblemInfo.class || '');
+          emblem.textContent = emblemInfo.text;
+          logoElement.appendChild(emblem);
+        }
+
+        /* ====== Listeners ====== */
+        document.getElementById("time1").addEventListener("change", () =>
+          atualizarLogo("time1", "logo1-img", "logo1-fallback", "nome-time1")
+        );
+        document.getElementById("time2").addEventListener("change", () =>
+          atualizarLogo("time2", "logo2-img", "logo2-fallback", "nome-time2")
+        );
+
+        /* ====== Simulação (mantive sua lógica, só chamei atualizarLogoResultado) ====== */
+        async function simular() {
+          const t1 = document.getElementById("time1").value;
+          const t2 = document.getElementById("time2").value;
+          const btn = document.getElementById("simular-btn");
+          const loading = document.getElementById("loading");
+          const resultado = document.getElementById("resultado-jogo");
+
+          if (t1 === t2) {
+            resultado.classList.remove("d-none");
+            document.getElementById("vencedor").textContent = "Escolha dois times diferentes!";
+            document.getElementById("gols1").textContent = "0";
+            document.getElementById("gols2").textContent = "0";
+            return;
+          }
+
+          btn.disabled = true;
+          loading.classList.remove("d-none");
+          resultado.classList.add("d-none");
+
+          // atualizar emblemas no resultado (fallback visual)
+          atualizarLogoResultado(t1, "result-logo1");
+          atualizarLogoResultado(t2, "result-logo2");
+
+          // pequena espera para sensação de processamento
+          setTimeout(() => {
+            const g1 = Math.floor(Math.random() * 4);
+            const g2 = Math.floor(Math.random() * 4);
+            const gols1Elem = document.getElementById("gols1");
+            const gols2Elem = document.getElementById("gols2");
+
+            gols1Elem.textContent = "0";
+            gols2Elem.textContent = "0";
+
+            let count1 = 0, count2 = 0;
+            const animateScores = () => {
+              if (count1 <= g1 || count2 <= g2) {
+                if (count1 <= g1) {
+                  gols1Elem.textContent = count1;
+                  if (count1 > 0) {
+                    gols1Elem.classList.add("goal-animation");
+                    setTimeout(() => gols1Elem.classList.remove("goal-animation"), 1000);
+                  }
+                  count1++;
+                }
+                if (count2 <= g2) {
+                  gols2Elem.textContent = count2;
+                  if (count2 > 0) {
+                    gols2Elem.classList.add("goal-animation");
+                    setTimeout(() => gols2Elem.classList.remove("goal-animation"), 1000);
+                  }
+                  count2++;
+                }
+                setTimeout(animateScores, 300);
+              } else {
+                let vencedor = "";
+                if (g1 > g2) vencedor = `${t1} venceu!`;
+                else if (g2 > g1) vencedor = `${t2} venceu!`;
+                else vencedor = "Empate!";
+                document.getElementById("vencedor").textContent = vencedor;
+                loading.classList.add("d-none");
+                resultado.classList.remove("d-none");
+                btn.disabled = false;
+              }
+            };
+            animateScores();
+          }, 800);
+        }
+
+        /* ==== Inicialização ao carregar a página ==== */
+        window.addEventListener("load", async () => {
+          // carrega ambos os logos (tenta direto -> proxy -> fallback)
+          await atualizarLogo("time1", "logo1-img", "logo1-fallback", "nome-time1");
+          // definimos time2 diferente para evitar mesmo-time ao abrir
+          const sel2 = document.getElementById("time2");
+          if (!sel2.value || sel2.value === document.getElementById("time1").value) {
+            sel2.value = Object.keys(logosOriginal).find(k => k !== document.getElementById("time1").value) || sel2.value;
+          }
+          await atualizarLogo("time2", "logo2-img", "logo2-fallback", "nome-time2");
+        });
+        /* expose simular caso o HTML chame onclick="simular()" */
+        window.simular = simular;
+    </script>
+</body>
+</html>
+
+                 
+
+                  <!-- ==================== VÍDEO ==================== -->
+                  <section class="section">
+                    <div class="p-4 elevated">
+                      <div class="section-title">
+                        <i class="bi bi-play-btn fs-3 text-primary"></i>
+                        <h2 class="m-0">Vídeo completo dublado Pelo criador de conteúdo Crow</h2>
+                      </div>
+                      <div class="ratio ratio-16x9">
+                        <iframe src="https://www.youtube.com/embed/rqM3H69c_c8"
+                                title="Blue Lock Dublado"
+                                allowfullscreen
+                                referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                      </div>
+                    </div>
+                  </section>
+
+                </main>
+
+                <footer>
+                  <div class="container container-narrow">
+                    <small>Feito por Marcos David  — projeto sem fins comerciais. • <a href="personagens.html">Ver personagens</a></small>
+                  </div>
+                </footer>
+
+                <!-- Bootstrap JS -->
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+                <!-- ==================== SCRIPTS ==================== -->
+                <script>
+                  // ======= THEME TOGGLE (com persistência) =======
+                  const themeBtn = document.getElementById('themeToggle');
+                  const themeLabel = themeBtn.querySelector('span');
+                  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  const storedTheme = localStorage.getItem('bluelock-theme');
+
+                  function applyTheme(mode){
+                    document.body.classList.toggle('dark-mode', mode === 'dark');
+                    themeLabel.textContent = mode === 'dark' ? 'Modo claro' : 'Modo escuro';
+                    themeBtn.firstElementChild.className = mode === 'dark' ? 'bi bi-sun' : 'bi bi-moon-stars';
+                    localStorage.setItem('bluelock-theme', mode);
+                  }
+                  applyTheme(storedTheme ? storedTheme : (prefersDark ? 'dark' : 'light'));
+                  themeBtn.addEventListener('click', ()=>{
+                    const now = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
+                    applyTheme(now);
+                  });
+
+                 
+
+                  // ======= Simulador =======
+                  function simular() {
+                    const t1 = document.getElementById("time1").value;
+                    const t2 = document.getElementById("time2").value;
+                    if (t1 === t2) {
+                      document.getElementById("resultado-jogo").textContent = "Escolha dois times diferentes.";
+                      return;
+                    }
+                    const g1 = Math.floor(Math.random() * 4);
+                    const g2 = Math.floor(Math.random() * 4);
+                    document.getElementById("resultado-jogo").textContent = `${t1} ${g1} x ${g2} ${t2}`;
+                  }
+                  window.simular = simular; // mantém a função global
+                  <!DOCTYPE html>
+                  <html lang="pt-br">
+                  <head>
+                      <meta charset="UTF-8">
+                      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                      <title>Simulador de Partidas - Blue Lock</title>
+                      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+                      <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+                      <style>
+                          body {
+                              background: linear-gradient(135deg, #0a0a2a 0%, #1a1a4a 100%);
+                              min-height: 100vh;
+                              padding: 20px;
+                              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                          }
+
+                          .bg-blue-lock {
+                              background: linear-gradient(135deg, #0a0a2a 0%, #1a1a4a 100%);
+                              border: 2px solid #00f5ff;
+                              box-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
+                          }
+
+                          .logo-container {
+                              width: 100px;
+                              height: 100px;
+                              border: 2px solid #00f5ff;
+                              border-radius: 12px;
+                              transition: transform 0.3s, box-shadow 0.3s;
+                              background-color: rgba(255, 255, 255, 0.05);
+                              display: flex;
+                              align-items: center;
+                              justify-content: center;
+                              margin: 0 auto 10px auto;
+                              overflow: hidden;
+                          }
+
+                          .logo-container:hover {
+                              transform: scale(1.05);
+                              box-shadow: 0 0 15px rgba(0, 245, 255, 0.5);
+                          }
+
+                          .fallback-emblem {
+                              width: 80px;
+                              height: 80px;
+                              border-radius: 50%;
+                              display: flex;
+                              align-items: center;
+                              justify-content: center;
+                              color: white;
+                              font-weight: bold;
+                              font-size: 16px;
+                              text-align: center;
+                          }
+
+                          .emblem-bastard {
+                              background: linear-gradient(135deg, #000000, #2d2d2d);
+                              border: 2px solid #ff0000;
+                          }
+
+                          .emblem-ubers {
+                              background: linear-gradient(135deg, #0000ff, #4444ff);
+                              border: 2px solid #ffffff;
+                          }
+
+                          .emblem-paris {
+                              background: linear-gradient(135deg, #ff0000, #ff8800);
+                              border: 2px solid #ffffff;
+                          }
+
+                          .emblem-barcha {
+                              background: linear-gradient(135deg, #ff0000, #0000ff);
+                              border: 2px solid #ffff00;
+                          }
+
+                          .emblem-manshine {
+                              background: linear-gradient(135deg, #00aa00, #00ff00);
+                              border: 2px solid #ffffff;
+                          }
+
+                          .small-logo {
+                              width: 50px;
+                              height: 50px;
+                              margin: 0 10px;
+                              display: flex;
+                              align-items: center;
+                              justify-content: center;
+                          }
+
+                          .small-emblem {
+                              width: 40px;
+                              height: 40px;
+                              border-radius: 50%;
+                              display: flex;
+                              align-items: center;
+                              justify-content: center;
+                              color: white;
+                              font-weight: bold;
+                              font-size: 12px;
+                          }
+
+                          .team-result {
+                              display: flex;
+                              align-items: center;
+                              justify-content: center;
+                          }
+
+                          select.form-select {
+                              cursor: pointer;
+                              transition: all 0.3s;
+                              background-color: rgba(0, 0, 0, 0.3) !important;
+                              color: white !important;
+                              border: 1px solid #00f5ff;
+                          }
+
+                          select.form-select:focus {
+                              border-color: #00f5ff;
+                              box-shadow: 0 0 0 0.25rem rgba(0, 245, 255, 0.25);
+                              background-color: rgba(0, 0, 0, 0.5) !important;
+                          }
+
+                          #simular-btn {
+                              transition: all 0.3s;
+                              background: linear-gradient(to right, #00f5ff, #00b3c5);
+                              border: none;
+                              color: #0a0a2a;
+                              font-weight: bold;
+                          }
+
+                          #simular-btn:hover {
+                              transform: translateY(-2px);
+                              box-shadow: 0 5px 15px rgba(0, 245, 255, 0.4);
+                          }
+
+                          .vs-text {
+                              font-size: 2rem;
+                              font-weight: bold;
+                              color: #00f5ff;
+                              text-shadow: 0 0 10px rgba(0, 245, 255, 0.7);
+                          }
+
+                          .score-display {
+                              font-size: 3rem;
+                              font-weight: bold;
+                              color: #00f5ff;
+                              text-shadow: 0 0 15px rgba(0, 245, 255, 0.5);
+                          }
+
+                          .winner-text {
+                              font-size: 1.5rem;
+                              font-weight: bold;
+                              background: linear-gradient(to right, #00f5ff, #ffcc00);
+                              -webkit-background-clip: text;
+                              -webkit-text-fill-color: transparent;
+                              text-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
+                          }
+
+                          .pulse {
+                              animation: pulse-animation 2s infinite;
+                          }
+
+                          @keyframes pulse-animation {
+                              0% { transform: scale(1); }
+                              50% { transform: scale(1.05); }
+                              100% { transform: scale(1); }
+                          }
+
+                          .goal-animation {
+                              animation: goal-animation 1s ease-out;
+                          }
+
+                          @keyframes goal-animation {
+                              0% { transform: scale(1); }
+                              50% { transform: scale(1.5); }
+                              100% { transform: scale(1); }
+                          }
+
+                          .stadium-bg {
+                              position: relative;
+                              overflow: hidden;
+                          }
+
+                          .stadium-bg::before {
+                              content: "";
+                              position: absolute;
+                              top: 0;
+                              left: 0;
+                              right: 0;
+                              bottom: 0;
+                              background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.03"><rect width="100" height="100" fill="none" stroke="%2300f5ff" stroke-width="2"/><circle cx="50" cy="50" r="40" fill="none" stroke="%2300f5ff" stroke-width="1"/><line x1="50" y1="0" x2="50" y2="100" stroke="%2300f5ff" stroke-width="1"/><circle cx="50" cy="50" r="10" fill="none" stroke="%2300f5ff" stroke-width="1"/></svg>');
+                              background-repeat: repeat;
+                              opacity: 0.1;
+                              z-index: -1;
+                          }
+
+                          .img-loading {
+                              filter: blur(5px);
+                              opacity: 0.7;
+                          }
+
+                          .img-loaded {
+                              filter: blur(0);
+                              opacity: 1;
+                              transition: filter 0.5s, opacity 0.5s;
+                          }
+
+                          .loading-spinner {
+                              position: absolute;
+                              top: 50%;
+                              left: 50%;
+                              transform: translate(-50%, -50%);
+                          }
+                      </style>
+                  </head>
+                  <body>
+                      <div class="container py-4">
+                          <div class="row justify-content-center">
+                              <div class="col-lg-8">
+                                  <div class="p-4 bg-blue-lock text-light rounded-3 shadow h-100 stadium-bg">
+                                      <div class="section-title mb-4 text-center">
+                                          <i class="bi bi-controller fs-1 text-warning pulse"></i>
+                                          <h2 class="m-0 fw-bold text-warning mt-2">Simulador de Partidas Blue Lock</h2>
+                                          <p class="text-light mt-2">Selecione dois times diferentes e simule uma partida emocionante!</p>
+                                      </div>
+
+                                      <div class="row g-4 mb-3 justify-content-center">
+                                          <!-- Time 1 -->
+                                          <div class="col-md-5 text-center">
+                                              <label class="form-label fw-bold text-info">Time 1</label>
+                                              <select id="time1" class="form-select mb-2">
+                                                  <option value="Bastard Munchen">Bastard Munchen</option>
+                                                  <option value="Paris X Gen">Paris X Gen</option>
+                                                  <option value="Ubers">Ubers</option>
+                                                  <option value="Barcha FC">Barcha FC</option>
+                                                  <option value="Manshine City">Manshine City</option>
+                                              </select>
+                                              <div class="logo-container">
+                                                  <div id="logo1-fallback" class="fallback-emblem emblem-bastard">BM</div>
+                                              </div>
+                                              <p class="fw-semibold mt-2 text-warning" id="nome-time1">Bastard Munchen</p>
+                                          </div>
+
+                                          <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                              <span class="vs-text">VS</span>
+                                          </div>
+
+                                          <!-- Time 2 -->
+                                          <div class="col-md-5 text-center">
+                                              <label class="form-label fw-bold text-info">Time 2</label>
+                                              <select id="time2" class="form-select mb-2">
+                                                  <option value="Paris X Gen">Paris X Gen</option>
+                                                  <option value="Bastard Munchen">Bastard Munchen</option>
+                                                  <option value="Ubers">Ubers</option>
+                                                  <option value="Barcha FC">Barcha FC</option>
+                                                  <option value="Manshine City">Manshine City</option>
+                                              </select>
+                                              <div class="logo-container">
+                                                  <div id="logo2-fallback" class="fallback-emblem emblem-paris">PXG</div>
+                                              </div>
+                                              <p class="fw-semibold mt-2 text-warning" id="nome-time2">Paris X Gen</p>
+                                          </div>
+                                      </div>
+
+                                      <div class="text-center mt-4">
+                                          <button id="simular-btn" class="btn btn-lg px-4 fw-bold" onclick="simular()">
+                                              <i class="bi bi-play-circle"></i> Simular Partida
+                                          </button>
+                                          <div id="loading" class="mt-3 d-none">
+                                              <div class="spinner-border text-info" role="status">
+                                                  <span class="visually-hidden">Simulando...</span>
+                                              </div>
+                                              <p class="mt-2 text-info">Calculando resultado...</p>
+                                          </div>
+                                          <div id="resultado-jogo" class="mt-4 p-3 bg-dark rounded d-none">
+                                              <h3 class="fw-bold mb-2 text-warning">Resultado Final</h3>
+                                              <div class="d-flex align-items-center justify-content-center">
+                                                  <div class="team-result">
+                                                      <div id="result-logo1" class="small-logo">
+                                                          <div class="small-emblem emblem-bastard">BM</div>
+                                                      </div>
+                                                      <span class="score-display mx-2" id="gols1">0</span>
+                                                  </div>
+                                                  <span class="mx-3 score-display">X</span>
+                                                  <div class="team-result">
+                                                      <span class="score-display mx-2" id="gols2">0</span>
+                                                      <div id="result-logo2" class="small-logo">
+                                                          <div class="small-emblem emblem-paris">PXG</div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                              <p id="vencedor" class="mt-3 winner-text"></p>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+
+                      <script>
+                          // Emblemas para cada time
+                          const emblems = {
+                              "Bastard Munchen": { class: "emblem-bastard", text: "BM" },
+                              "Ubers": { class: "emblem-ubers", text: "UB" },
+                              "Paris X Gen": { class: "emblem-paris", text: "PXG" },
+                              "Barcha FC": { class: "emblem-barcha", text: "BA" },
+                              "Manshine City": { class: "emblem-manshine", text: "MC" }
+                          };
+
+                          // Função para atualizar o emblema
+                          function atualizarEmblema(selectId, fallbackId, nomeId) {
+                              const time = document.getElementById(selectId).value;
+                              document.getElementById(nomeId).textContent = time;
+
+                              const emblemInfo = emblems[time];
+                              const fallbackElement = document.getElementById(fallbackId);
+
+                              fallbackElement.className = 'fallback-emblem ' + emblemInfo.class;
+                              fallbackElement.textContent = emblemInfo.text;
+                          }
+
+                          // Função para atualizar o emblema no resultado
+                          function atualizarEmblemaResultado(time, logoId) {
+                              const logoElement = document.getElementById(logoId);
+                              logoElement.innerHTML = '';
+
+                              const emblemInfo = emblems[time];
+                              const emblem = document.createElement('div');
+                              emblem.className = 'small-emblem ' + emblemInfo.class;
+                              emblem.textContent = emblemInfo.text;
+
+                              logoElement.appendChild(emblem);
+                          }
+
+                          // Adicionar event listeners para os selects
+                          document.getElementById("time1").addEventListener("change", () => 
+                              atualizarEmblema("time1", "logo1-fallback", "nome-time1"));
+
+                          document.getElementById("time2").addEventListener("change", () => 
+                              atualizarEmblema("time2", "logo2-fallback", "nome-time2"));
+
+                          // Função principal de simulação
+                          function simular() {
+                              const t1 = document.getElementById("time1").value;
+                              const t2 = document.getElementById("time2").value;
+                              const btn = document.getElementById("simular-btn");
+                              const loading = document.getElementById("loading");
+                              const resultado = document.getElementById("resultado-jogo");
+
+                              // Verificar se os times são iguais
+                              if (t1 === t2) {
+                                  resultado.classList.remove("d-none");
+                                  document.getElementById("vencedor").textContent = "Escolha dois times diferentes!";
+                                  document.getElementById("gols1").textContent = "0";
+                                  document.getElementById("gols2").textContent = "0";
+                                  return;
+                              }
+
+                              // Mostrar loading
+                              btn.disabled = true;
+                              loading.classList.remove("d-none");
+                              resultado.classList.add("d-none");
+
+                              // Atualizar emblemas no resultado
+                              atualizarEmblemaResultado(t1, "result-logo1");
+                              atualizarEmblemaResultado(t2, "result-logo2");
+
+                              // Simular tempo de processamento
+                              setTimeout(() => {
+                                  // Limitar os gols a 3 como solicitado
+                                  const g1 = Math.floor(Math.random() * 4); // 0-3
+                                  const g2 = Math.floor(Math.random() * 4); // 0-3
+
+                                  // Atualizar placar com animação
+                                  const gols1Elem = document.getElementById("gols1");
+                                  const gols2Elem = document.getElementById("gols2");
+
+                                  gols1Elem.textContent = "0";
+                                  gols2Elem.textContent = "0";
+
+                                  // Animar a contagem de gols
+                                  let count1 = 0;
+                                  let count2 = 0;
+
+                                  const animateScores = () => {
+                                      if (count1 <= g1 || count2 <= g2) {
+                                          if (count1 <= g1) {
+                                              gols1Elem.textContent = count1;
+                                              if (count1 > 0 && count1 <= g1) {
+                                                  gols1Elem.classList.add("goal-animation");
+                                                  setTimeout(() => gols1Elem.classList.remove("goal-animation"), 1000);
+                                              }
+                                              count1++;
+                                          }
+
+                                          if (count2 <= g2) {
+                                              gols2Elem.textContent = count2;
+                                              if (count2 > 0 && count2 <= g2) {
+                                                  gols2Elem.classList.add("goal-animation");
+                                                  setTimeout(() => gols2Elem.classList.remove("goal-animation"), 1000);
+                                              }
+                                              count2++;
+                                          }
+
+                                          setTimeout(animateScores, 300);
+                                      } else {
+                                          // Determinar vencedor
+                                          let vencedor = "";
+                                          if (g1 > g2) {
+                                              vencedor = `${t1} venceu!`;
+                                          } else if (g2 > g1) {
+                                              vencedor = `${t2} venceu!`;
+                                          } else {
+                                              vencedor = "Empate!";
+                                          }
+
+                                          document.getElementById("vencedor").textContent = vencedor;
+
+                                          // Esconder loading e mostrar resultado
+                                          loading.classList.add("d-none");
+                                          resultado.classList.remove("d-none");
+                                          btn.disabled = false;
+                                      }
+                                  };
+
+                                  animateScores();
+                              }, 800);
+                          }
+
+                          // Inicializar os emblemas ao carregar a página
+                          window.addEventListener("load", () => {
+                              atualizarEmblema("time1", "logo1-fallback", "nome-time1");
+                              atualizarEmblema("time2", "logo2-fallback", "nome-time2");
+
+                              // Garantir que os times iniciais sejam diferentes
+                              document.getElementById("time2").value = "Paris X Gen";
+                              atualizarEmblema("time2", "logo2-fallback", "nome-time2");
+                          });
+                      </script>
+                  </body>
+                  </html>
+                
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Personagens - Blue Lock</title>
+
+  <!-- Bootstrap / Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#eef4ff; --text:#0b1220; --muted:#52607a;
+      --card:#ffffff; --border:#e7edf8; --shadow:0 8px 24px rgba(2,6,23,.06);
+      --accent:#0d6efd;
+    }
+    body.dark-mode{
+      --bg:#0b1220; --text:#f3f6fc; --muted:#b8c4d9;
+      --card:#121a2b; --border:#1d2841; --shadow:0 8px 24px rgba(0,0,0,.35);
+      --accent:#60a5fa;
+    }
+
+    body{
+      background:var(--bg);
+      color:var(--text);
+      font-family:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      transition: background .25s ease, color .25s ease;
+    }
+    .navbar{
+      background: rgba(12, 23, 41, .92);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid #0f203a;
+    }
+    .navbar-brand{ font-family:'Bebas Neue', cursive; letter-spacing:.6px; }
+    .theme-btn{ border-radius:999px; display:inline-flex; align-items:center; gap:.5rem; }
+
+    .page-header{
+      padding:32px 0; border-bottom:1px solid var(--border);
+      background: radial-gradient(900px 400px at -10% -10%, #8ec5ff33, transparent 60%);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px,1fr));
+      gap:18px;
+    }
+    .card.character{
+      background:var(--card); border:1px solid var(--border);
+      border-radius:16px; box-shadow:var(--shadow);
+      overflow:hidden; transition: transform .15s ease, box-shadow .25s ease;
+    }
+    .card.character:hover{ transform: translateY(-4px); }
+    .card.character img{
+      width:100%; height:280px; object-fit:cover;
+      background:#0b1220;
+    }
+    .card.character .info{ padding:14px 14px 16px; }
+    .card.character h2{
+      font-family:'Bebas Neue', cursive; letter-spacing:.5px;
+      font-size:1.45rem; margin:0 0 4px;
+    }
+    .badge-role{
+      background: rgba(13,110,253,.1);
+      color: var(--accent);
+      border:1px solid rgba(13,110,253,.2);
+      border-radius:999px; padding:.15rem .5rem; font-size:.8rem; font-weight:600;
+    }
+    .muted{ color: var(--muted); font-size:.95rem; }
+    footer{ color:var(--muted); border-top:1px solid var(--border); padding:24px 0; margin-top:36px; text-align:center; }
+  </style>
+</head>
+<body>
+  
+  <!DOCTYPE html>
+  <html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Quiz Blue Lock</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+      body {
+        background-color: #0b1220; /* Azul escuro do tema Blue Lock */
+        font-family: 'Inter', Arial, sans-serif;
+        color: #f3f6fc; /* Texto claro para contraste */
+      }
+      .quiz-container {
+        max-width: 800px;
+        margin: 50px auto;
+        background: #121a2b;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 230, 255, 0.2);
+        text-align: center;
+        border: 1px solid #00e6ff;
+      }
+      .quiz-question {
+        font-size: 1.4rem;
+        margin-bottom: 20px;
+        color: #00e6ff;
+        font-weight: 600;
+      }
+      .quiz-answer {
+        margin-bottom: 10px;
+        background-color: #04122c;
+        color: #f3f6fc;
+        border: 1px solid #00e6ff;
+        transition: all 0.3s ease;
+      }
+      .quiz-answer:hover {
+        background-color: #00e6ff;
+        color: #04122c;
+      }
+      .feedback {
+        font-weight: bold;
+        margin-top: 15px;
+        color: #f3f6fc;
+      }
+      .hidden {
+        display: none;
+      }
+      img.quiz-image {
+        max-width: 100%;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        border: 2px solid #00e6ff;
+      }
+      h2 {
+        color: #00e6ff;
+        margin-bottom: 20px;
+      }
+      #result {
+        color: #00e6ff;
+      }
+      .btn-success {
+        background-color: #00e6ff;
+        border-color: #00b8cc;
+        color: #04122c;
+      }
+      .btn-success:hover {
+        background-color: #00b8cc;
+        border-color: #00e6ff;
+        color: #04122c;
+      }
+      .btn-primary {
+        background-color: #04122c;
+        border-color: #00e6ff;
+        color: #00e6ff;
+      }
+      .btn-primary:hover {
+        background-color: #00e6ff;
+        border-color: #00e6ff;
+        color: #04122c;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="quiz-container">
+      <h2 class="text-center mb-4">Quiz Blue Lock ⚽</h2>
+
+      <!-- Botão de iniciar quiz -->
+      <button id="start-btn" class="btn btn-success mb-4">Iniciar Quiz</button>
+
+      <div id="quiz" class="hidden">
+        <div id="image-container"></div>
+        <div id="question" class="quiz-question"></div>
+        <div id="answers" class="mb-3"></div>
+        <div id="feedback" class="feedback"></div>
+        <button id="next-btn" class="btn btn-primary mt-3 hidden">Próxima Pergunta</button>
+      </div>
+
+      <div id="result" class="text-center mt-4 fw-bold fs-4"></div>
+    </div>
+
+    <script>
+      const questions = [
+        {
+          question: "Quem foi o primeiro jogador a marcar um gol na Liga Neo egoísta?",
+          answers: [
+            { text: "Isagi Yoichi", correct: false },
+            { text: "Kaiser", correct: true }
+          ],
+          image: "https://i.ytimg.com/vi/U0r0EkfLanU/maxresdefault.jpg" 
+        },
+        {
+          question: "Qual é a principal habilidade de Nagi Seishiro?",
+          answers: [
+            { text: "Velocidade extrema", correct: false },
+            { text: "Domínio e controle de bola", correct: true }
+          ],
+          image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSs489-1-Bdij8SWGl52qAN-KjM1dlpeEU6vH9PDV2hOasJEdApGcZH-Dtig_3yiULLQrk&usqp=CAU"
+        },
+        {
+          question: "Quem é o criador e responsável pelo projeto Blue Lock?",
+          answers: [
+            { text: "Anri Teieri", correct: true },
+            { text: "Jinpachi Ego", correct: false }
+          ],
+          image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUTt788ifvZWpuDiI80zHCictB0rJFuX76xvJ9ITWkUU6jNXbLa0quypn6BhFxN9bsIMk&usqp=CAU"
+        },
+        {
+          question: "Qual era a posição original de Isagi antes de entrar no Blue Lock?",
+          answers: [
+            { text: "Meio Campista ", correct: false },
+            { text: "Atacante", correct: true }
+          ],
+          image: "https://pt.quizur.com/_image?href=https://img.quizur.com/f/img641b65df604b74.77427714.jpg?lastEdited=1679517157&w=600&h=600&f=webp"
+        },
+        {
+          question: "Qual jogador é conhecido como 'Rei' dentro do Blue Lock?",
+          answers: [
+            { text: "Barou Shouei", correct: true },
+            { text: "Ryusei Shidou", correct: false }
+          ],
+          image: "https://i.ytimg.com/vi/m-f6KCwXAtU/hq720.jpg"
+        },
+        {
+          question: "Qual dupla se destacou por sua química surpreendente no início do Blue Lock?",
+          answers: [
+            { text: "Isagi e Nagi", correct: false },
+            { text: "Isagi e Bachira", correct: true }
+          ],
+          image: "https://i.redd.it/wnzpa22i38p61.jpg"
+        },
+        {
+          question: "Qual o objetivo principal do projeto Blue Lock?",
+          answers: [
+            { text: "Formar uma defesa impenetrável para o Japão", correct: false },
+            { text: "Criar o melhor atacante do mundo", correct: true }
+          ],
+          image: "https://m.media-amazon.com/images/S/pv-target-images/cd6204c81c4547dec4904bc2575d3cdd77abaa462857336faf44abc5eba89ef5.png"
+        },
+        {
+          question: "Porque Kaiser e Isagi se uniram na partida contra PXG ",
+          answers: [
+            { text: "Para derrotar os gênios e ganharem a partida ", correct: true },
+            { text: "Para marcar um gol juntos ", correct: false }
+          ],
+          image: "https://i.redd.it/gzk8xifyf79f1.jpeg"
+        },
+        {
+          question: "Quem venceu a partida Bastard Munique vs FC Barcha (Partida 1)?",
+          answers: [
+            { text: "Bastard Munique", correct: true },
+            { text: "FC Barcha", correct: false }
+          ],
+          image: "https://i.ytimg.com/vi/vgS1DUn3LWs/maxresdefault.jpg"
+        },
+        {
+          question: "Qual personagem é chamado de 'Zumbi ' e atua como zagueiro?",
+          answers: [
+            { text: "Don Lorenzo", correct: true },
+            { text: "Aiku", correct: false }
+          ],
+          image: "https://i.ytimg.com/vi/5Dn63lc7O20/hq720.jpg"
+        }
+      ];
+
+      let currentQuestionIndex = 0;
+      let score = 0;
+
+      const questionEl = document.getElementById("question");
+      const answersEl = document.getElementById("answers");
+      const feedbackEl = document.getElementById("feedback");
+      const nextBtn = document.getElementById("next-btn");
+      const resultEl = document.getElementById("result");
+      const imageContainer = document.getElementById("image-container");
+      const quizContainer = document.getElementById("quiz");
+      const startBtn = document.getElementById("start-btn");
+
+      // Iniciar quiz ao clicar no botão
+      startBtn.addEventListener("click", () => {
+        startBtn.classList.add("hidden");  
+        quizContainer.classList.remove("hidden");  
+        showQuestion();
+      });
+
+      function showQuestion() {
+        const currentQuestion = questions[currentQuestionIndex];
+        questionEl.textContent = `Pergunta ${currentQuestionIndex + 1}: ${currentQuestion.question}`;
+        answersEl.innerHTML = "";
+        feedbackEl.textContent = "";
+        nextBtn.classList.add("hidden");
+
+        imageContainer.innerHTML = "";
+        if (currentQuestion.image) {
+          const img = document.createElement("img");
+          img.src = currentQuestion.image;
+          img.alt = "Imagem da pergunta";
+          img.classList.add("quiz-image");
+          imageContainer.appendChild(img);
+        }
+
+        currentQuestion.answers.forEach(answer => {
+          const btn = document.createElement("button");
+          btn.textContent = answer.text;
+          btn.classList.add("btn", "btn-outline-primary", "w-100", "quiz-answer");
+          btn.onclick = () => selectAnswer(answer.correct, btn);
+          answersEl.appendChild(btn);
+        });
+      }
+
+      function selectAnswer(correct, button) {
+        const allButtons = answersEl.querySelectorAll("button");
+        allButtons.forEach(btn => btn.disabled = true);
+
+        if (correct) {
+          button.classList.replace("btn-outline-primary", "btn-success");
+          feedbackEl.textContent = "✅ Resposta correta!";
+          score++;
+        } else {
+          button.classList.replace("btn-outline-primary", "btn-danger");
+          feedbackEl.textContent = "❌ Resposta errada!";
+        }
+        nextBtn.classList.remove("hidden");
+      }
+
+      nextBtn.addEventListener("click", () => {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+          showQuestion();
+        } else {
+          showResult();
+        }
+      });
+
+      function showResult() {
+        quizContainer.innerHTML = "";
+        resultEl.innerHTML = `Você acertou <strong>${score}</strong> de <strong>${questions.length}</strong> perguntas.`;
+      }
+    </script>
+  </body>
+  </html>
+
+  
+ 
+  

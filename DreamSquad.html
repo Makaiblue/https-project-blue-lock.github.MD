@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blue Lock – Dream Squad</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+  :root{
+    --azul:#04122c;
+    --azul-escuro:#020c1c;
+    --ciano:#00e6ff;
+    --ciano-escuro:#00b8cc;
+    --gold:#ffd700;
+    --gold-dark:#daa520;
+    --diamond:#b9f2ff;
+    --diamond-dark:#7bd4ea;
+  }
+  body{
+    background:var(--azul-escuro);
+    color:#fff;
+    font-family:"Poppins",Arial,Helvetica,sans-serif;
+    background-image: linear-gradient(to bottom, var(--azul) 0%, var(--azul-escuro) 100%);
+    min-height: 100vh;
+  }
+  .navbar {
+    background-color: rgba(2, 12, 28, 0.9);
+    border-bottom: 2px solid var(--ciano);
+  }
+  .navbar-brand {
+    font-weight: 700;
+    color: var(--ciano) !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .nav-link {
+    color: #fff !important;
+    transition: all 0.3s;
+    position: relative;
+    padding: 0.5rem 1rem;
+    margin: 0 0.2rem;
+  }
+  .nav-link:hover {
+    color: var(--ciano) !important;
+  }
+  .nav-link.active {
+    color: var(--ciano) !important;
+    font-weight: 600;
+  }
+  .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 10%;
+    width: 80%;
+    height: 3px;
+    background-color: var(--ciano);
+    border-radius: 3px;
+  }
+  h1{
+    font-weight:700;
+    letter-spacing:.5px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    color: var(--ciano);
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  h2 {
+    color: var(--ciano);
+    border-bottom: 2px solid var(--ciano);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  h3, h4, h5, h6 {
+    color: #fff !important;
+  }
+  .tab-content {
+    background: rgba(4, 18, 44, 0.7);
+    border-radius: 12px;
+    padding: 25px;
+    border: 1px solid var(--ciano);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    margin: 0 auto;
+    max-width: 1200px;
+  }
+  .pitch-container {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  .pitch{
+    position:relative;
+    width:100%;
+    max-width:950px;
+    aspect-ratio:2/3;
+    background:radial-gradient(circle at center,#083972 0%,#031022 100%);
+    border:4px solid var(--ciano);
+    margin:auto;
+    border-radius:12px;
+    box-shadow: 0 5px 25px rgba(0, 230, 255, 0.2);
+  }
+  .slot{
+    position:absolute;
+    width:90px;
+    height:90px;
+    border:3px solid var(--ciano);
+    border-radius:50%;
+    overflow:hidden;
+    background:#000a;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:top .4s,left .4s,transform .2s, box-shadow .2s;
+    z-index: 2;
+  }
+  .slot:hover{
+    transform:scale(1.05);
+    box-shadow: 0 0 15px var(--ciano);
+  }
+  .slot img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:.85;
+    transition: opacity .3s;
+  }
+  .slot:hover img {
+    opacity: 1;
+  }
+  .num-label{
+    position:absolute;
+    bottom:-6px;
+    left:50%;
+    transform:translateX(-50%);
+    background:var(--ciano);
+    color:#000;
+    font-size:.8rem;
+    font-weight:700;
+    border-radius:4px;
+    padding:0 4px;
+    z-index: 3;
+  }
+  .logo{
+    width:95px;
+    border-radius:50%;
+    border:2px solid var(--ciano);
+    box-shadow: 0 0 15px rgba(0, 230, 255, 0.5);
+  }
+  .ego-box{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    width:150px;
+    padding:8px;
+    border:2px solid var(--ciano);
+    border-radius:10px;
+    background:#0008;
+    position:absolute;
+    bottom:10px;
+    right:10px;
+    text-align:center;
+    z-index: 1;
+  }
+  .ego-box img{
+    width:120px;
+    border-radius:10px;
+  }
+  #overallBox{
+    font-size:1.2rem;
+    margin:10px auto;
+    background:#0005;
+    padding:6px 14px;
+    border:1px solid var(--ciano);
+    display:inline-block;
+    border-radius:6px;
+    color: var(--ciano);
+    font-weight: 600;
+    text-align: center;
+  }
+  #formationSelect{
+    max-width:220px;
+    background-color: var(--azul);
+    color: white;
+    border: 1px solid var(--ciano);
+    margin: 0 auto;
+    display: block;
+  }
+  #formationSelect:focus {
+    box-shadow: 0 0 0 0.25rem rgba(0, 230, 255, 0.25);
+    border-color: var(--ciano);
+  }
+  .modal-card{
+    cursor:pointer;
+    transition:transform .2s, box-shadow .2s;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #0a2a5f, #04122c);
+    border: 1px solid var(--ciano);
+    text-align: center;
+    height: 100%;
+  }
+  .modal-card:hover{
+    transform:scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 230, 255, 0.5);
+  }
+  .modal-card img{
+    width:100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius:6px;
+  }
+  .player-stats {
+    background: rgba(4, 18, 44, 0.7);
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 30px;
+    border: 1px solid var(--ciano);
+    text-align: center;
+  }
+  .stat-bar {
+    height: 10px;
+    background: #04122c;
+    border-radius: 5px;
+    margin: 8px 0;
+    overflow: hidden;
+  }
+  .stat-fill {
+    height: 100%;
+    background: var(--ciano);
+    border-radius: 5px;
+  }
+  .squad-list {
+    background: rgba(4, 18, 44, 0.7);
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 30px;
+    border: 1px solid var(--ciano);
+    text-align: center;
+  }
+  .squad-player {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid rgba(0, 230, 255, 0.3);
+    transition: background 0.3s;
+    justify-content: center;
+  }
+  .squad-player:hover {
+    background: rgba(0, 230, 255, 0.1);
+  }
+  .squad-player img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+    border: 2px solid var(--ciano);
+    object-fit: cover;
+  }
+  .field-lines {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  .half-line {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.2);
+    top: 50%;
+  }
+  .center-circle {
+    position: absolute;
+    width: 20%;
+    height: 20%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    top: 40%;
+    left: 40%;
+  }
+  .penalty-box {
+    position: absolute;
+    width: 70%;
+    height: 15%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    top: 85%;
+    left: 15%;
+    border-bottom: none;
+  }
+  .goal-box {
+    position: absolute;
+    width: 30%;
+    height: 8%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    top: 92%;
+    left: 35%;
+    border-bottom: none;
+  }
+  .instructions {
+    background: rgba(4, 18, 44, 0.7);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid var(--ciano);
+    text-align: center;
+    color: #fff;
+  }
+  .instructions h3 {
+    color: var(--ciano);
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  .instructions li {
+    margin-bottom: 8px;
+    text-align: left;
+    color: #fff;
+  }
+  .btn-ciano {
+    background: transparent;
+    color: var(--ciano);
+    border: 1px solid var(--ciano);
+    transition: all 0.3s;
+    margin: 5px;
+  }
+  .btn-ciano:hover {
+    background: var(--ciano);
+    color: var(--azul-escuro);
+  }
+  .centered-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .player-filters {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .player-filters input, .player-filters select {
+    max-width: 250px;
+  }
+  .tab-pane {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Novos estilos para melhorar a visibilidade */
+  .card-body {
+    color: #fff !important;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 15px !important;
+  }
+  .card-body strong {
+    color: #fff;
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 5px;
+  }
+  .card-body small {
+    color: #b8c4d9;
+    font-size: 0.9rem;
+  }
+  .text-warning {
+    color: var(--gold) !important;
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  /* Estilo para New Gen */
+  .new-gen-badge {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #000 !important;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    margin-left: 5px;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+  }
+
+  /* Estilo para Mestres */
+  .master-card {
+    border: 2px solid var(--gold) !important;
+    background: linear-gradient(135deg, #1a1a1a, #2a2a2a) !important;
+    position: relative;
+    overflow: hidden;
+  }
+  .master-card::after {
+    content: '⭐ MESTRE';
+    position: absolute;
+    top: 10px;
+    right: -20px;
+    background: var(--gold);
+    color: #000;
+    font-weight: bold;
+    padding: 3px 25px;
+    transform: rotate(45deg);
+    font-size: 0.7rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  }
+  .master-card .card-body {
+    background: rgba(0,0,0,0.8);
+  }
+  .master-card .text-warning {
+    color: var(--gold) !important;
+    text-shadow: 0 0 5px rgba(255,215,0,0.5);
+  }
+
+  /* Estilo para Diamante (New Gen especial) */
+  .diamond-badge {
+    background: linear-gradient(135deg, var(--diamond), var(--diamond-dark));
+    color: #000 !important;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    margin-left: 5px;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+  }
+
+  /* Estatísticas visuais */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+  }
+  .stat-item {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--ciano);
+  }
+  .stat-label {
+    font-size: 0.9rem;
+    color: #e0e0e0;
+  }
+
+  /* Filtros de categoria */
+  .category-filters {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .category-btn {
+    background: rgba(4, 18, 44, 0.7);
+    border: 1px solid var(--ciano);
+    color: #e0e0e0;
+    padding: 5px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 500;
+  }
+  .category-btn.active, .category-btn:hover {
+    background: var(--ciano);
+    color: #000;
+  }
+
+  /* Melhorias de visibilidade para textos */
+  .text-muted {
+    color: #b8c4d9 !important;
+  }
+  .card-footer {
+    background: rgba(0, 0, 0, 0.6) !important;
+    border-top: 1px solid rgba(0, 230, 255, 0.3) !important;
+  }
+
+  /* Ajuste para imagens padronizadas */
+  .player-img-container {
+    height: 200px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+  }
+  .player-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <img class="logo me-2" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHTQhVGXYsDLDssIOxinIDubNmqoidpwU5fg&s" alt="Blue Lock Logo" style="width: 40px; height: 40px;">
+      BLUE LOCK - DREAM SQUAD
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html"><i class="fas fa-home me-1"></i> Voltar ao Site</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container my-5">
+  <div class="row">
+    <div class="col-12">
+      <h1>Monte Seu Dream Squad</h1>
+
+      <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="squad-tab" data-bs-toggle="tab" data-bs-target="#squad" type="button" role="tab" aria-controls="squad" aria-selected="true">
+            <i class="fas fa-chess-board me-2"></i>Montar Time
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="stats-tab" data-bs-toggle="tab" data-bs-target="#stats" type="button" role="tab" aria-controls="stats" aria-selected="false">
+            <i class="fas fa-chart-line me-2"></i>Estatísticas
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="players-tab" data-bs-toggle="tab" data-bs-target="#players" type="button" role="tab" aria-controls="players" aria-selected="false">
+            <i class="fas fa-users me-2"></i>Jogadores
+          </button>
+        </li>
+      </ul>
+
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="squad" role="tabpanel" aria-labelledby="squad-tab">
+          <div class="instructions">
+            <h3><i class="fas fa-info-circle me-2"></i>Como montar seu time:</h3>
+            <ol class="text-start">
+              <li>Selecione uma formação no menu abaixo</li>
+              <li>Clique em uma posição no campo para abrir o menu de jogadores</li>
+              <li>Escolha um jogador para aquela posição</li>
+              <li>Digite o número da camisa quando solicitado (números não podem se repetir)</li>
+              <li>Acompanhe a média geral do seu time</li>
+              <li><strong>ATENÇÃO:</strong> Você pode adicionar apenas um jogador Mestre ao time!</li>
+            </ol>
+          </div>
+
+          <div class="centered-content mb-4">
+            <select id="formationSelect" class="form-select mb-3">
+              <option value="4-3-3">4-3-3</option>
+              <option value="3-4-3">3-4-3</option>
+              <option value="3-5-1-1">3-5-1-1</option>
+              <option value="3-4-1-2">3-4-1-2</option>
+            </select>
+            <div id="overallBox">Overall Médio: 0</div>
+          </div>
+
+          <div class="pitch-container">
+            <div class="pitch" id="pitch">
+              <div class="field-lines">
+                <div class="half-line"></div>
+                <div class="center-circle"></div>
+                <div class="penalty-box"></div>
+                <div class="goal-box"></div>
+              </div>
+            </div>
+
+            <div class="ego-box">
+              <img src="https://ih1.redbubble.net/image.4637024501.0382/st,small,507x507-pad,600x600,f8f8f8.jpg" alt="Ego">
+              <div class="fw-bold mt-1">Treinador Ego</div>
+            </div>
+          </div>
+
+          <div class="centered-content mt-4">
+            <button id="saveTeamBtn" class="btn btn-ciano"><i class="fas fa-save me-1"></i> Salvar Time</button>
+            <button id="shareTeamBtn" class="btn btn-ciano"><i class="fas fa-share-alt me-1"></i> Compartilhar</button>
+            <button class="btn btn-ciano" onclick="resetTeam()"><i class="fas fa-undo me-1"></i> Reiniciar</button>
+            <button id="loadTeamBtn" class="btn btn-ciano"><i class="fas fa-download me-1"></i> Carregar Time</button>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="stats" role="tabpanel" aria-labelledby="stats-tab">
+          <h2>Estatísticas do Time</h2>
+          <p class="text-muted">Estatísticas detalhadas do seu time serão exibidas aqui quando você montar seu squad.</p>
+
+          <div class="row justify-content-center">
+            <div class="col-md-10">
+              <div class="player-stats">
+                <h3>Distribuição de Overall</h3>
+                <div id="statsContainer">
+                  <p class="text-center">Adicione jogadores para ver as estatísticas</p>
+                </div>
+
+                <div class="stats-grid mt-4">
+                  <div class="stat-item">
+                    <div class="stat-value" id="avgOverall">0</div>
+                    <div class="stat-label">Overall Médio</div>
+                  </div>
+                  <div class="stat-item">
+                    <div class="stat-value" id="totalPlayers">0</div>
+                    <div class="stat-label">Jogadores</div>
+                  </div>
+                  <div class="stat-item">
+                    <div class="stat-value" id="attackRating">0</div>
+                    <div class="stat-label">Ataque</div>
+                  </div>
+                  <div class="stat-item">
+                    <div class="stat-value" id="defenseRating">0</div>
+                    <div class="stat-label">Defesa</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-10">
+              <div class="squad-list">
+                <h3>Seu Time</h3>
+                <div id="squadList">
+                  <p class="text-center">Nenhum jogador selecionado ainda</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="players" role="tabpanel" aria-labelledby="players-tab">
+          <h2>Catálogo de Jogadores</h2>
+          <p class="text-muted">Todos os jogadores disponíveis para montar seu time Dream Squad.</p>
+
+          <div class="player-filters">
+            <input type="text" class="form-control" id="playerSearch" placeholder="Buscar jogador...">
+            <select class="form-select" id="positionFilter">
+              <option value="">Todas as posições</option>
+              <option value="Atacante">Atacante</option>
+              <option value="Meio">Meio Campo</option>
+              <option value="Zagueiro">Zagueiro</option>
+              <option value="Goleiro">Goleiro</option>
+              <option value="Lateral">Lateral</option>
+            </select>
+          </div>
+
+          <div class="category-filters">
+            <div class="category-btn active" data-category="all">Todos</div>
+            <div class="category-btn" data-category="newgen">New Gen</div>
+            <div class="category-btn" data-category="masters">Mestres</div>
+            <div class="category-btn" data-category="normal">Normais</div>
+          </div>
+
+          <div class="row justify-content-center" id="playerList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Jogador -->
+<div class="modal fade" id="playerModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h5 class="modal-title">Escolha o Jogador</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row justify-content-center" id="modalPlayerList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// ========== Jogadores ==========
+const players=[
+  // Jogadores normais
+  {id:'isagi',nome:'Isagi Yoichi',pos:'Atacante/Meio',ovr:88,img:'https://static.wikia.nocookie.net/bluelock/images/b/b4/BL_Icon_Yoichi_Isagi.jpg', category: 'normal'},
+  {id:'bachira',nome:'Bachira Meguru',pos:'Atacante/Ponta',ovr:86,img:'https://static.wikia.nocookie.net/bluelock/images/2/2b/BL_Icon_Meguru_Bachira.jpg', category: 'normal'},
+  {id:'kunigami',nome:'Kunigami Rensuke',pos:'Atacante',ovr:91,img:'https://static.wikia.nocookie.net/bluelock/images/0/0b/BL_Icon_Rensuke_Kunigami.jpg', category: 'normal'},
+  {id:'barou',nome:'Barou Shoei',pos:'Atacante',ovr:92,img:'https://static.wikia.nocookie.net/bluelock/images/f/fc/BL_Icon_Shoei_Baro.jpg', category: 'normal'},
+  {id:'gaga',nome:'Gin Gagamaru',pos:'Goleiro',ovr:87,img:'https://static.wikia.nocookie.net/bluelock/images/8/86/BL_Icon_Gin_Gagamaru.jpg', category: 'normal'},
+  {id:'reo',nome:'Reo Mikage',pos:'Meio Campo',ovr:85,img:'https://static.wikia.nocookie.net/bluelock/images/6/61/BL_Icon_Reo_Mikage.jpg', category: 'normal'},
+  {id:'chigiri',nome:'Hyoma Chigiri',pos:'Ponta/Lateral',ovr:90,img:'https://static.wikia.nocookie.net/bluelock/images/e/e4/BL_Icon_Hyoma_Chigiri.jpg', category: 'normal'},
+  {id:'hiori',nome:'Yo Hiori',pos:'Meio/Volante',ovr:84,img:'https://static.wikia.nocookie.net/bluelock/images/e/ee/BL_Icon_Yo_Hiori.jpg', category: 'normal'},
+  {id:'yuki',nome:'Kenyu Yukimiya',pos:'Atacante/Ponta',ovr:84,img:'https://static.wikia.nocookie.net/bluelock/images/9/9b/BL_Icon_Kenyu_Yukimiya.jpg', category: 'normal'},
+  {id:'aiku',nome:'Oliver Aiku',pos:'Zagueiro',ovr:87,img:'https://static.wikia.nocookie.net/bluelock/images/5/53/BL_Icon_Oliver_Aiku.jpg', category: 'normal'},
+  {id:'rin',nome:'Rin Itoshi',pos:'Atacante',ovr:91,img:'https://static.wikia.nocookie.net/bluelock/images/f/f9/BL_Icon_Rin_Itoshi.jpg', category: 'normal'},
+  {id:'niko',nome:'Ikki Niko',pos:'Zagueiro',ovr:82,img:'https://static.wikia.nocookie.net/bluelock/images/8/8d/BL_Icon_Ikki_Niko.jpg', category: 'normal'},
+  {id:'aryu',nome:'Jyubei Aryu',pos:'Zagueiro',ovr:80,img:'https://static.wikia.nocookie.net/bluelock/images/7/71/BL_Icon_Jyubei_Aryu.jpg', category: 'normal'},
+  {id:'karasu',nome:'Tabito Karasu',pos:'Meio/Zagueiro',ovr:84,img:'https://static.wikia.nocookie.net/bluelock/images/d/d4/BL_Icon_Tabito_Karasu.jpg', category: 'normal'},
+  {id:'otoya',nome:'Eita Otoya',pos:'Ponta/Lateral',ovr:84,img:'https://static.wikia.nocookie.net/bluelock/images/8/84/BL_Icon_Eita_Otoya.jpg', category: 'normal'},
+  {id:'shidou',nome:'Ryusei Shidou',pos:'Atacante',ovr:88,img:'https://static.wikia.nocookie.net/bluelock/images/7/7a/BL_Icon_Ryusei_Shido.jpg', category: 'normal'},
+  {id:'nanase',nome:'Nijiro Nanase',pos:'Meio/Lateral',ovr:82,img:'https://static.wikia.nocookie.net/bluelock/images/b/bc/BL_Icon_Nijiro_Nanase.jpg', category: 'normal'},
+  {id:'kurona',nome:'Ranze Kurona',pos:'Meio/Lateral',ovr:84,img:'https://static.wikia.nocookie.net/bluelock/images/c/c0/BL_Icon_Ranze_Kurona.jpg', category: 'normal'},
+  {id:'raichi',nome:'Jingo Raichi',pos:'Zagueiro',ovr:80,img:'https://static.wikia.nocookie.net/bluelock/images/e/ed/BL_Icon_Jingo_Raichi.jpg', category: 'normal'},
+  {id:'ness',nome:'Alexis Ness',pos:'Meio Campo',ovr:90,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9OWbQJUuw8L8e1g8mHifPIccX3qijPJFDYQ&s', category: 'normal'},
+  {id:'charles',nome:'Charles Chevalier',pos:'Meio Campo',ovr:94,img:'https://i.pinimg.com/474x/58/c2/aa/58c2aa16193bcfb84540c9d2843f24d7.jpg', category: 'normal'},
+
+  // New Gen
+  {id:'sae',nome:'Itoshi Sae',pos:'Meio Campo',ovr:99,img:'https://i.pinimg.com/236x/6a/89/62/6a8962e506983d96aa220758df52926b.jpg', category: 'newgen'},
+  {id:'kaiser',nome:'Michael Kaiser',pos:'Atacante',ovr:95,img:'https://i.pinimg.com/236x/af/86/c6/af86c650e452af85e21d0f11345ac84d.jpg', category: 'newgen'},
+  {id:'lorenzo',nome:'Don Lorenzo',pos:'Zagueiro/Atacante',ovr:94,img:'https://i.pinimg.com/736x/6d/2b/ea/6d2beaf4b64bf91d0a637d3187d7d823.jpg', category: 'newgen'},
+
+  // Mestres (apenas um pode ser adicionado)
+  {id:'noa',nome:'Noel Noa',pos:'Atacante',ovr:99,img:'https://i.pinimg.com/736x/e2/83/11/e28311f5884022d7f2a888ebe9b73314.jpg', category: 'master'},
+  {id:'lavinho',nome:'Lavinho',pos:'Atacante',ovr:99,img:'https://i.pinimg.com/736x/96/71/4f/96714f324aac4a27236290a99bec4f6b.jpg', category: 'master'},
+  {id:'snuffy',nome:'Marc Snuffy',pos:'Atacante/Volante',ovr:99,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcIp7YsbmyYGwSr4ZfSqbCq6yuI6jPq-idlg&s', category: 'master'},
+  {id:'loki',nome:'Julian Loki',pos:'Atacante/Ponta',ovr:99,img:'https://i.pinimg.com/736x/53/96/7f/53967f5b3e40778e992c8bc5b1be6617.jpg', category: 'master'},
+  {id:'prince',nome:'Chris Prince',pos:'Atacante',ovr:99,img:'https://i.pinimg.com/736x/4f/d5/02/4fd502d4b3cb310891d89d0386b37bb7.jpg', category: 'master'},
+];
+
+// ========== Formações ==========
+const formations={
+ "4-3-3":[
+  {id:'gk',top:'90%',left:'50%'},
+  {id:'lb',top:'72%',left:'25%'},{id:'cb1',top:'72%',left:'42%'},{id:'cb2',top:'72%',left:'58%'},{id:'rb',top:'72%',left:'75%'},
+  {id:'cm1',top:'52%',left:'38%'},{id:'cm2',top:'52%',left:'50%'},{id:'cm3',top:'52%',left:'62%'},
+  {id:'lw',top:'30%',left:'30%'},{id:'st',top:'28%',left:'50%'},{id:'rw',top:'30%',left:'70%'}
+ ],
+ "3-4-3":[
+  {id:'gk',top:'90%',left:'50%'},
+  {id:'cb1',top:'72%',left:'35%'},{id:'cb2',top:'72%',left:'50%'},{id:'cb3',top:'72%',left:'65%'},
+  {id:'cm1',top:'55%',left:'32%'},{id:'cm2',top:'55%',left:'44%'},{id:'cm3',top:'55%',left:'56%'},{id:'cm4',top:'55%',left:'68%'},
+  {id:'lw',top:'30%',left:'30%'},{id:'st',top:'28%',left:'50%'},{id:'rw',top:'30%',left:'70%'}
+ ],
+ "3-5-1-1":[
+  {id:'gk',top:'90%',left:'50%'},
+  {id:'cb1',top:'72%',left:'35%'},{id:'cb2',top:'72%',left:'50%'},{id:'cb3',top:'72%',left:'65%'},
+  {id:'cm1',top:'55%',left:'28%'},{id:'cm2',top:'55%',left:'38%'},{id:'cm3',top:'55%',left:'50%'},{id:'cm4',top:'55%',left:'62%'},{id:'cm5',top:'55%',left:'74%'},
+  {id:'am',top:'38%',left:'50%'},{id:'st',top:'25%',left:'50%'}
+ ],
+ "3-4-1-2":[
+  {id:'gk',top:'90%',left:'50%'},
+  {id:'cb1',top:'72%',left:'35%'},{id:'cb2',top:'72%',left:'50%'},{id:'cb3',top:'72%',left:'65%'},
+  {id:'cm1',top:'55%',left:'32%'},{id:'cm2',top:'55%',left:'44%'},{id:'cm3',top:'55%',left:'56%'},{id:'cm4',top:'55%',left:'68%'},
+  {id:'am',top:'38%',left:'50%'},{id:'st1',top:'25%',left:'42%'},{id:'st2',top:'25%',left:'58%'}
+ ],
+};
+
+let currentFormation="4-3-3";
+const pitch=document.getElementById("pitch");
+let usedNumbers = new Set();
+let hasMaster = false;
+
+// ===== Render Formation =====
+function renderFormation(){
+  pitch.innerHTML='<div class="field-lines"><div class="half-line"></div><div class="center-circle"></div><div class="penalty-box"></div><div class="goal-box"></div></div>';
+  formations[currentFormation].forEach(slot=>{
+    const div=document.createElement('div');
+    div.className='slot';
+    div.style.top=slot.top;
+    div.style.left=slot.left;
+    div.dataset.slotId=slot.id;
+    div.onclick=()=>openModal(div);
+    pitch.appendChild(div);
+  });
+  updateOverall();
+  updateSquadList();
+  updateStats();
+}
+renderFormation();
+
+// ===== Render Player List =====
+function renderPlayerList(category = 'all') {
+  const playerListContainer = document.getElementById("playerList");
+  playerListContainer.innerHTML = '';
+
+  const searchTerm = document.getElementById("playerSearch").value.toLowerCase();
+  const positionFilter = document.getElementById("positionFilter").value;
+
+  const filteredPlayers = players.filter(player => {
+    const matchesSearch = player.nome.toLowerCase().includes(searchTerm) || 
+                          player.pos.toLowerCase().includes(searchTerm);
+    const matchesPosition = !positionFilter || 
+                           (positionFilter === 'Atacante' && player.pos.includes('Atacante')) ||
+                           (positionFilter === 'Meio' && player.pos.includes('Meio')) ||
+                           (positionFilter === 'Zagueiro' && player.pos.includes('Zagueiro')) ||
+                           (positionFilter === 'Goleiro' && player.pos.includes('Goleiro')) ||
+                           (positionFilter === 'Lateral' && player.pos.includes('Lateral'));
+    const matchesCategory = category === 'all' || player.category === category;
+    return matchesSearch && matchesPosition && matchesCategory;
+  });
+
+  filteredPlayers.forEach(p=>{
+    const col=document.createElement('div');
+    col.className='col-6 col-md-3 mb-4';
+
+    let cardClass = 'modal-card card h-100';
+    let badge = '';
+
+    if (p.category === 'newgen') {
+      badge = '<span class="diamond-badge">💎 NEW GEN</span>';
+    } else if (p.category === 'master') {
+      cardClass += ' master-card';
+      badge = '<span class="new-gen-badge">⭐ MESTRE</span>';
+    }
+
+    col.innerHTML=`<div class="${cardClass}" data-id="${p.id}">
+       <div class="player-img-container">
+         <img src="${p.img}" alt="${p.nome}">
+       </div>
+       <div class="card-body p-2">
+         <strong>${p.nome}</strong>
+         ${badge}
+         <div class="mt-2">
+           <small>${p.pos}</small> 
+           <div class="text-warning">OVR ${p.ovr}</div>
+         </div>
+       </div>
+       <div class="card-footer p-2">
+         <button class="btn btn-sm btn-ciano w-100" onclick="addToSquadFromList('${p.id}')">Adicionar ao Time</button>
+       </div>
+     </div>`;
+    playerListContainer.appendChild(col);
+  });
+}
+
+// ===== Modal Players =====
+const modalPlayerList=document.getElementById("modalPlayerList");
+players.forEach(p=>{
+  const col=document.createElement('div');
+  col.className='col-6 col-md-3 mb-3';
+
+  let cardClass = 'modal-card card bg-secondary';
+  let badge = '';
+
+  if (p.category === 'newgen') {
+    badge = '<span class="diamond-badge">💎 NEW GEN</span>';
+  } else if (p.category === 'master') {
+    cardClass += ' master-card';
+    badge = '<span class="new-gen-badge">⭐ MESTRE</span>';
+  }
+
+  col.innerHTML=`<div class="${cardClass}" data-id="${p.id}">
+     <div class="player-img-container">
+       <img src="${p.img}" alt="${p.nome}">
+     </div>
+     <div class="card-body p-2">
+       <strong>${p.nome}</strong>
+       ${badge}
+       <div class="mt-2">
+         <small>${p.pos}</small> 
+         <div class="text-warning">OVR ${p.ovr}</div>
+       </div>
+     </div></div>`;
+  modalPlayerList.appendChild(col);
+  col.querySelector('.modal-card').onclick=()=>selectPlayer(p);
+});
+const modal=new bootstrap.Modal(document.getElementById("playerModal"));
+let currentSlot=null;
+
+function openModal(slot){
+  currentSlot=slot;
+  modal.show();
+}
+
+function selectPlayer(p){
+  // Verificar se é mestre e já existe outro mestre no time
+  if (p.category === 'master' && hasMaster) {
+    alert('Você já tem um Mestre no time! Apenas um Mestre é permitido.');
+    return;
+  }
+
+  // evitar duplicata
+  const used=[...document.querySelectorAll('.slot')].map(s=>s.dataset.playerId);
+  if(used.includes(p.id)){
+    alert('Este jogador já está em outro slot!');
+    return;
+  }
+
+  // pede número de camisa
+  let num;
+  do {
+    num = prompt(`Número da camisa de ${p.nome}?`,"9")||"";
+
+    if (num === "") break;
+
+    if (usedNumbers.has(num)) {
+      alert('Este número já está sendo usado! Escolha outro número.');
+    }
+  } while (usedNumbers.has(num));
+
+  if (num === "") return;
+
+  usedNumbers.add(num);
+
+  currentSlot.innerHTML=`<img src="${p.img}"><div class="num-label">${num}</div>`;
+  currentSlot.dataset.playerId=p.id;
+  currentSlot.dataset.ovr=p.ovr;
+  currentSlot.dataset.playerName=p.nome;
+  currentSlot.dataset.category=p.category || 'normal';
+
+  // Atualizar status de mestre
+  if (p.category === 'master') {
+    hasMaster = true;
+  }
+
+  modal.hide();
+  updateOverall();
+  updateSquadList();
+  updateStats();
+}
+
+function addToSquadFromList(playerId) {
+  const player = players.find(p => p.id === playerId);
+  if (!player) return;
+
+  // Verificar se é mestre e já existe outro mestre no time
+  if (player.category === 'master' && hasMaster) {
+    alert('Você já tem um Mestre no time! Apenas um Mestre é permitido.');
+    return;
+  }
+
+  // Encontrar o primeiro slot vazio
+  const emptySlots = [...document.querySelectorAll('.slot')].filter(s => !s.dataset.playerId);
+  if (emptySlots.length === 0) {
+    alert('Todos os slots estão preenchidos! Remova um jogador primeiro.');
+    return;
+  }
+
+  const slot = emptySlots[0];
+
+  // pede número de camisa
+  let num;
+  do {
+    num = prompt(`Número da camisa de ${player.nome}?`,"9")||"";
+
+    if (num === "") break;
+
+    if (usedNumbers.has(num)) {
+      alert('Este número já está sendo usado! Escolha outro número.');
+    }
+  } while (usedNumbers.has(num));
+
+  if (num === "") return;
+
+  usedNumbers.add(num);
+
+  slot.innerHTML=`<img src="${player.img}"><div class="num-label">${num}</div>`;
+  slot.dataset.playerId=player.id;
+  slot.dataset.ovr=player.ovr;
+  slot.dataset.playerName=player.nome;
+  slot.dataset.category=player.category || 'normal';
+
+  // Atualizar status de mestre
+  if (player.category === 'master') {
+    hasMaster = true;
+  }
+
+  updateOverall();
+  updateSquadList();
+  updateStats();
+}
+
+function updateOverall(){
+  const slots=[...document.querySelectorAll('.slot')].filter(s=>s.dataset.ovr);
+  if(slots.length===0){
+    document.getElementById('overallBox').textContent="Overall Médio: 0";
+    return;
+  }
+  const total=slots.reduce((acc,s)=>acc+parseInt(s.dataset.ovr),0);
+  const avg=(total/slots.length).toFixed(1);
+  document.getElementById('overallBox').textContent=`Overall Médio: ${avg}`;
+}
+
+function updateSquadList() {
+  const squadListContainer = document.getElementById("squadList");
+  const slots = [...document.querySelectorAll('.slot')].filter(s => s.dataset.playerId);
+
+  if (slots.length === 0) {
+    squadListContainer.innerHTML = '<p class="text-center">Nenhum jogador selecionado ainda</p>';
+    return;
+  }
+
+  squadListContainer.innerHTML = '';
+  slots.forEach(slot => {
+    const playerDiv = document.createElement('div');
+    playerDiv.className = 'squad-player';
+
+    const player = players.find(p => p.id === slot.dataset.playerId);
+    let badge = '';
+
+    if (player.category === 'newgen') {
+      badge = '<span class="diamond-badge">💎 NEW GEN</span>';
+    } else if (player.category === 'master') {
+      badge = '<span class="new-gen-badge">⭐ MESTRE</span>';
+    }
+
+    playerDiv.innerHTML = `
+      <img src="${player.img}" alt="${slot.dataset.playerName}">
+      <div>
+        <strong>${slot.dataset.playerName}</strong>
+        ${badge}
+        <div>
+          <small>OVR: ${slot.dataset.ovr} | ${slot.querySelector('.num-label').textContent}</small>
+        </div>
+      </div>
+    `;
+    squadListContainer.appendChild(playerDiv);
+  });
+}
+
+function updateStats() {
+  const slots = [...document.querySelectorAll('.slot')].filter(s => s.dataset.playerId);
+  const totalPlayers = slots.length;
+
+  if (totalPlayers === 0) {
+    document.getElementById('statsContainer').innerHTML = '<p class="text-center">Adicione jogadores para ver as estatísticas</p>';
+    document.getElementById('avgOverall').textContent = '0';
+    document.getElementById('totalPlayers').textContent = '0';
+    document.getElementById('attackRating').textContent = '0';
+    document.getElementById('defenseRating').textContent = '0';
+    return;
+  }
+
+  // Calcular overall médio
+  const totalOvr = slots.reduce((acc, s) => acc + parseInt(s.dataset.ovr), 0);
+  const avgOvr = (totalOvr / totalPlayers).toFixed(1);
+
+  // Calcular ratings por posição
+  let attackRating = 0;
+  let midfieldRating = 0;
+  let defenseRating = 0;
+  let goalkeeperRating = 0;
+
+  let attackCount = 0;
+  let midfieldCount = 0;
+  let defenseCount = 0;
+  let goalkeeperCount = 0;
+
+  slots.forEach(slot => {
+    const ovr = parseInt(slot.dataset.ovr);
+    const position = slot.dataset.slotId;
+
+    if (position === 'gk') {
+      goalkeeperRating += ovr;
+      goalkeeperCount++;
+    } else if (position.includes('cb') || position.includes('b')) {
+      defenseRating += ovr;
+      defenseCount++;
+    } else if (position.includes('cm') || position.includes('am') || position.includes('m')) {
+      midfieldRating += ovr;
+      midfieldCount++;
+    } else {
+      attackRating += ovr;
+      attackCount++;
+    }
+  });
+
+  // Normalizar ratings
+  attackRating = attackCount > 0 ? Math.round(attackRating / attackCount) : 0;
+  midfieldRating = midfieldCount > 0 ? Math.round(midfieldRating / midfieldCount) : 0;
+  defenseRating = defenseCount > 0 ? Math.round(defenseRating / defenseCount) : 0;
+  goalkeeperRating = goalkeeperCount > 0 ? Math.round(goalkeeperRating / goalkeeperCount) : 0;
+
+  // Calcular rating geral de ataque e defesa
+  const totalAttackRating = Math.round((attackRating * 0.7) + (midfieldRating * 0.3));
+  const totalDefenseRating = Math.round((defenseRating * 0.6) + (midfieldRating * 0.3) + (goalkeeperRating * 0.4));
+
+  // Atualizar elementos
+  document.getElementById('avgOverall').textContent = avgOvr;
+  document.getElementById('totalPlayers').textContent = totalPlayers;
+  document.getElementById('attackRating').textContent = totalAttackRating;
+  document.getElementById('defenseRating').textContent = totalDefenseRating;
+
+  // Atualizar gráfico de estatísticas com mais detalhes
+  const statsHTML = `
+    <div class="mt-3">
+      <div class="d-flex justify-content-between align-items-center mb-1">
+        <span>Ataque (${attackCount})</span>
+        <span>${attackRating}</span>
+      </div>
+      <div class="stat-bar">
+        <div class="stat-fill" style="width: ${attackRating}%"></div>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mb-1 mt-2">
+        <span>Meio-campo (${midfieldCount})</span>
+        <span>${midfieldRating}</span>
+      </div>
+      <div class="stat-bar">
+        <div class="stat-fill" style="width: ${midfieldRating}%"></div>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mb-1 mt-2">
+        <span>Defesa (${defenseCount})</span>
+        <span>${defenseRating}</span>
+      </div>
+      <div class="stat-bar">
+        <div class="stat-fill" style="width: ${defenseRating}%"></div>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mb-1 mt-2">
+        <span>Goleiro (${goalkeeperCount})</span>
+        <span>${goalkeeperRating}</span>
+      </div>
+      <div class="stat-bar">
+        <div class="stat-fill" style="width: ${goalkeeperRating}%"></div>
+      </div>
+
+      <hr>
+
+      <div class="d-flex justify-content-between align-items-center mb-1 mt-2">
+        <strong>Ataque Total</strong>
+        <strong>${totalAttackRating}</strong>
+      </div>
+      <div class="stat-bar">
+        <div class="stat-fill" style="width: ${totalAttackRating}%"></div>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mb-1 mt-2">
+        <strong>Defesa Total</strong>
+        <strong>${totalDefenseRating}</strong>
+      </div>
+      <div class="stat-bar">
+        <div class="stat-fill" style="width: ${totalDefenseRating}%"></div>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mb-1 mt-2">
+        <strong>Overall Médio</strong>
+        <strong>${avgOvr}</strong>
+      </div>
+      <div class="stat-bar">
+        <div class="stat-fill" style="width: ${avgOvr}%"></div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('statsContainer').innerHTML = statsHTML;
+}
+
+function resetTeam() {
+  const slots = [...document.querySelectorAll('.slot')];
+  slots.forEach(slot => {
+    slot.innerHTML = '';
+    delete slot.dataset.playerId;
+    delete slot.dataset.ovr;
+    delete slot.dataset.playerName;
+    delete slot.dataset.category;
+  });
+
+  usedNumbers.clear();
+  hasMaster = false;
+
+  updateOverall();
+  updateSquadList();
+  updateStats();
+}
+
+// ===== Funções para gerenciar salvamento =====
+function saveTeam() {
+  const teamData = {
+    formation: currentFormation,
+    players: [],
+    timestamp: new Date().toISOString()
+  };
+
+  // Coletar dados dos jogadores
+  const slots = [...document.querySelectorAll('.slot')].filter(s => s.dataset.playerId);
+  slots.forEach(slot => {
+    teamData.players.push({
+      slotId: slot.dataset.slotId,
+      playerId: slot.dataset.playerId,
+      number: slot.querySelector('.num-label').textContent
+    });
+  });
+
+  // Salvar no localStorage
+  localStorage.setItem('bluelockDreamSquad', JSON.stringify(teamData));
+  alert('Time salvo com sucesso!');
+}
+
+function loadTeam() {
+  const savedData = localStorage.getItem('bluelockDreamSquad');
+  if (!savedData) {
+    alert('Nenhum time salvo encontrado!');
+    return false;
+  }
+
+  const teamData = JSON.parse(savedData);
+
+  // Restaurar formação
+  currentFormation = teamData.formation;
+  document.getElementById('formationSelect').value = currentFormation;
+  renderFormation();
+
+  // Restaurar jogadores
+  teamData.players.forEach(playerData => {
+    const player = players.find(p => p.id === playerData.playerId);
+    if (player) {
+      const slot = document.querySelector(`.slot[data-slot-id="${playerData.slotId}"]`);
+      if (slot) {
+        slot.innerHTML = `<img src="${player.img}"><div class="num-label">${playerData.number}</div>`;
+        slot.dataset.playerId = player.id;
+        slot.dataset.ovr = player.ovr;
+        slot.dataset.playerName = player.nome;
+        slot.dataset.category = player.category || 'normal';
+
+        // Adicionar número aos usados
+        usedNumbers.add(playerData.number);
+
+        // Verificar se é mestre
+        if (player.category === 'master') {
+          hasMaster = true;
+        }
+      }
+    }
+  });
+
+  updateOverall();
+  updateSquadList();
+  updateStats();
+  alert('Time carregado com sucesso!');
+  return true;
+}
+
+// ===== Sistema de Compartilhamento =====
+function shareTeam() {
+  const teamData = {
+    formation: currentFormation,
+    players: []
+  };
+
+  // Coletar dados dos jogadores
+  const slots = [...document.querySelectorAll('.slot')].filter(s => s.dataset.playerId);
+  slots.forEach(slot => {
+    teamData.players.push({
+      slotId: slot.dataset.slotId,
+      playerId: slot.dataset.playerId,
+      number: slot.querySelector('.num-label').textContent
+    });
+  });
+
+  // Codificar para base64 para facilitar compartilhamento
+  const teamCode = btoa(JSON.stringify(teamData));
+
+  // Criar URL para compartilhamento
+  const shareUrl = `${window.location.origin}${window.location.pathname}?team=${teamCode}`;
+
+  // Copiar para área de transferência
+  navigator.clipboard.writeText(shareUrl).then(() => {
+    alert('Link do time copiado! Compartilhe este link com outras pessoas.');
+  }).catch(err => {
+    // Fallback para navegadores mais antigos
+    prompt('Copie o código abaixo para compartilhar seu time:', teamCode);
+  });
+}
+
+// ===== Verificar se há time na URL ao carregar a página =====
+function checkUrlForTeam() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const teamCode = urlParams.get('team');
+
+  if (teamCode) {
+    try {
+      const teamData = JSON.parse(atob(teamCode));
+
+      // Carregar time da URL
+      currentFormation = teamData.formation;
+      document.getElementById('formationSelect').value = currentFormation;
+      renderFormation();
+
+      // Limpar time atual
+      resetTeam();
+
+      // Adicionar jogadores
+      teamData.players.forEach(playerData => {
+        const player = players.find(p => p.id === playerData.playerId);
+        if (player) {
+          const slot = document.querySelector(`.slot[data-slot-id="${playerData.slotId}"]`);
+          if (slot) {
+            slot.innerHTML = `<img src="${player.img}"><div class="num-label">${playerData.number}</div>`;
+            slot.dataset.playerId = player.id;
+            slot.dataset.ovr = player.ovr;
+            slot.dataset.playerName = player.nome;
+            slot.dataset.category = player.category || 'normal';
+
+            usedNumbers.add(playerData.number);
+
+            if (player.category === 'master') {
+              hasMaster = true;
+            }
+          }
+        }
+      });
+
+      updateOverall();
+      updateSquadList();
+      updateStats();
+    } catch (e) {
+      console.error('Erro ao carregar time da URL:', e);
+    }
+  }
+}
+
+// ===== Troca Formação =====
+document.getElementById("formationSelect").addEventListener("change",e=>{
+  // Manter jogadores ao trocar formação?
+  if(confirm("Ao trocar de formação, todos os jogadores serão removidos. Deseja continuar?")) {
+    currentFormation=e.target.value;
+    resetTeam();
+    renderFormation();
+  } else {
+    e.target.value = currentFormation;
+  }
+});
+
+// ===== Filtros de Jogadores =====
+document.getElementById("playerSearch").addEventListener("input", () => {
+  const activeCategory = document.querySelector('.category-btn.active').dataset.category;
+  renderPlayerList(activeCategory);
+});
+
+document.getElementById("positionFilter").addEventListener("change", () => {
+  const activeCategory = document.querySelector('.category-btn.active').dataset.category;
+  renderPlayerList(activeCategory);
+});
+
+// Filtros de categoria
+document.querySelectorAll('.category-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderPlayerList(btn.dataset.category);
+  });
+});
+
+// Adicionar eventos aos botões
+document.getElementById('saveTeamBtn').addEventListener('click', saveTeam);
+document.getElementById('shareTeamBtn').addEventListener('click', shareTeam);
+document.getElementById('loadTeamBtn').addEventListener('click', loadTeam);
+
+// Executar ao carregar la página
+window.addEventListener('load', function() {
+  // Verificar se há time na URL
+  checkUrlForTeam();
+
+  // Tentar carregar time salvo automaticamente
+  const savedData = localStorage.getItem('bluelockDreamSquad');
+  if (savedData && confirm('Deseja carregar seu time salvo anteriormente?')) {
+    loadTeam();
+  }
+
+  // Inicializar a lista de jogadores
+  renderPlayerList();
+});
+</script>
+</body>
+</html>
