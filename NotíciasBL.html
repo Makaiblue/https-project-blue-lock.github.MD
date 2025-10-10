@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Notícias - Blue Lock</title>
+
+  <!-- Bootstrap / Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#eef4ff; --text:#0b1220; --muted:#52607a;
+      --card:#ffffff; --border:#e7edf8; --shadow:0 8px 24px rgba(2,6,23,.06);
+      --accent:#0d6efd;
+      --blue-lock-blue: #004aad;
+      --blue-lock-yellow: #ffd700;
+      --blue-lock-red: #e63946;
+    }
+    body.dark-mode{
+      --bg:#0b1220; --text:#f3f6fc; --muted:#b8c4d9;
+      --card:#121a2b; --border:#1d2841; --shadow:0 8px 24px rgba(0,0,0,.35);
+      --accent:#60a5fa;
+      --blue-lock-blue: #3b82f6;
+      --blue-lock-yellow: #fbbf24;
+      --blue-lock-red: #ef4444;
+    }
+
+    body{
+      background:var(--bg);
+      color:var(--text);
+      font-family:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      transition: background .25s ease, color .25s ease;
+    }
+    .navbar{
+      background: rgba(12, 23, 41, .92);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid #0f203a;
+    }
+    .navbar-brand{ 
+      font-family:'Bebas Neue', cursive; 
+      letter-spacing:.6px; 
+      color: var(--blue-lock-yellow) !important;
+    }
+    .theme-btn{ border-radius:999px; display:inline-flex; align-items:center; gap:.5rem; }
+
+    .page-header{
+      padding: 30px 0; 
+      border-bottom: 2px solid var(--blue-lock-blue);
+      background: var(--bg);
+    }
+
+    .news-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .news-article {
+      margin-bottom: 50px;
+    }
+
+    .news-title {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 3.2rem;
+      color: var(--blue-lock-blue);
+      margin-bottom: 20px;
+      letter-spacing: 1.2px;
+      line-height: 1.1;
+      border-bottom: 3px solid var(--blue-lock-yellow);
+      padding-bottom: 15px;
+    }
+
+    .news-content {
+      margin-top: 20px;
+    }
+
+    .news-text {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 25px;
+      color: var(--text);
+      text-align: justify;
+    }
+
+    .news-images {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 30px;
+      margin: 40px 0;
+    }
+
+    .news-image {
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .news-image:hover {
+      transform: scale(1.02);
+    }
+
+    .news-image img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .news-image-caption {
+      padding: 12px 15px;
+      background: var(--blue-lock-blue);
+      color: white;
+      font-size: 1.1rem;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .news-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 50px 0;
+    }
+
+    .lead-text {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--blue-lock-blue);
+      margin-bottom: 30px;
+      padding-left: 20px;
+      border-left: 4px solid var(--blue-lock-yellow);
+    }
+
+    footer{ 
+      color:var(--muted); 
+      border-top:2px solid var(--blue-lock-blue); 
+      padding:30px 0; 
+      margin-top:60px; 
+      text-align:center; 
+    }
+
+    @media (max-width: 1200px) {
+      .news-images {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .news-title {
+        font-size: 2.5rem;
+      }
+
+      .news-image img {
+        height: 300px;
+      }
+
+      .lead-text {
+        font-size: 1.2rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .news-title {
+        font-size: 2rem;
+      }
+
+      .news-image img {
+        height: 250px;
+      }
+
+      .news-text {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="navbar navbar-dark sticky-top">
+    <div class="container d-flex align-items-center justify-content-between py-2">
+      <a class="navbar-brand text-white" href="#"><i class="bi bi-newspaper me-1"></i> Blue Lock Notícias</a>
+      <div class="d-flex gap-2">
+        <a href="index.html" class="btn btn-outline-light btn-sm">🏠 Voltar</a>
+        <button id="themeToggle" class="btn btn-outline-light btn-sm theme-btn"><i class="bi bi-moon-stars"></i> <span>Modo escuro</span></button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <section class="page-header">
+    <div class="container text-center">
+      <h1 style="font-family: 'Bebas Neue', cursive; font-size: 4.5rem; color: var(--blue-lock-blue); letter-spacing: 2px;">BLUE LOCK Capítulos</h1>
+      <p style="font-size: 1.3rem; color: var(--muted); font-weight: 500;">As últimas notícias do mangá que está revolucionando o futebol</p>
+    </div>
+  </section>
+
+  <!-- NEWS CONTENT -->
+  <main class="container my-5">
+    <div class="news-container">
+
+      <!-- NOTÍCIA 1 -->
+      <article class="news-article">
+        <h2 class="news-title">JAPÃO VENCE PRIMEIRO TEMPO POR 2X0 CONTRA NIGÉRIA</h2>
+
+        <div class="news-content">
+          <p class="lead-text">
+            Em jogo eletrizante, seleção japonesa domina primeiro tempo com atuação brilhante de Gagamaru no gol e gols de Bachira e Mikage.
+          </p>
+
+          <p class="news-text">
+            O primeiro tempo entre Nigéria e Japão terminou com um placar surpreendente de 2 a 0 para a seleção japonesa. A partida foi marcada por uma atuação extraordinária do goleiro Gin Gagamaru, que realizou defesas incríveis e garantiu a vantagem do Japão no placar.
+          </p>
+
+          <div class="news-images">
+            <div class="news-image">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLrE5ZOwT-OghXr43ByMrq71WzFPWs2xGWUw&s" alt="Defesa de Gagamaru">
+              <div class="news-image-caption">Gagamaru realiza defesa milagrosa nos acréscimos do primeiro tempo</div>
+            </div>
+            <div class="news-image">
+              <img src="https://mugiwarasoficial.com/wp-content/uploads/WP-manga/data/manga_689cf6933af5c/628598470fcff3873b0196fd78d54da6/015.png" alt="Fim do primeiro tempo">
+              <div class="news-image-caption">Juiz apita o final do primeiro tempo com vantagem japonesa</div>
+            </div>
+          </div>
+
+          <p class="news-text">
+            O momento decisivo aconteceu nos acréscimos, quando o atacante nigeriano Onazi teve chance clara de gol, mas Gagamaru voou para realizar defesa espetacular. Imediatamente após a defesa, o juiz apitou o final da primeira etapa.
+          </p>
+        </div>
+      </article>
+
+      <div class="news-divider"></div>
+
+      <!-- NOTÍCIA 2 -->
+      <article class="news-article">
+        <h2 class="news-title">BACHIRA ABRE O PLACAR COM GOL DE PURA GENIALIDADE</h2>
+
+        <div class="news-content">
+          <p class="lead-text">
+            Jogador demonstra toda sua técnica em jogada individual que desmontou a defesa nigeriana.
+          </p>
+
+          <p class="news-text">
+            Bachira Meguru abriu o placar com um gol que sintetiza a filosofia Blue Lock. Recebendo no meio de campo, desmontou a marcação com cortes rápidos e giros imprevisíveis, deixando adversários para trás.
+          </p>
+
+          <div class="news-images">
+            <div class="news-image">
+              <img src="https://mugiwarasoficial.com/wp-content/uploads/WP-manga/data/manga_689cf6933af5c/b873be3cea1bc67b6067907a7abda6d2/006.png" alt="Bachira driblando">
+              <div class="news-image-caption">Bachira desvia da marcação com sua característica habilidade</div>
+            </div>
+            <div class="news-image">
+              <img src="https://mugiwarasoficial.com/wp-content/uploads/WP-manga/data/manga_689cf6933af5c/b873be3cea1bc67b6067907a7abda6d2/007.png" alt="Bachira chutando">
+              <div class="news-image-caption">Chute preciso de Bachira para abrir o placar</div>
+            </div>
+          </div>
+
+          <p class="news-text">
+            Com dois defensores à sua frente, Bachira acelerou em zigue-zague, mantendo a bola colada aos pés. Invadiu a área e, no último instante, cortou para dentro surpreendendo a defesa. Seu chute potente explodiu na rede.
+          </p>
+        </div>
+      </article>
+
+      <div class="news-divider"></div>
+
+      <!-- NOTÍCIA 3 - GOL DO REO -->
+      <article class="news-article">
+        <h2 class="news-title">REO MIKAGE AMPLIA COM GOL DE PRECISÃO CIRÚRGICA</h2>
+
+        <div class="news-content">
+          <p class="lead-text">
+            Segundo gol japonês saiu após jogada coletiva de rara beleza entre Mikage e Bachira.
+          </p>
+
+          <div class="news-images">
+            <div class="news-image">
+              <img src="https://mugiwarasoficial.com/wp-content/uploads/WP-manga/data/manga_689cf6933af5c/3b3ceda47aa6c2be95e4fac17a6eaeff/002.png" alt="Reo e Bachira na jogada">
+              <div class="news-image-caption">Reo inicia a jogada que resultaria no segundo gol</div>
+            </div>
+            <div class="news-image">
+              <img src="https://mugiwarasoficial.com/wp-content/uploads/WP-manga/data/manga_689cf6933af5c/3b3ceda47aa6c2be95e4fac17a6eaeff/007.png" alt="Reo fazendo o gol">
+              <div class="news-image-caption">Mikage finaliza com precisão para ampliar o placar</div>
+            </div>
+          </div>
+
+          <p class="news-text">
+            Reo dominou e devolveu de primeira para Bachira, que girou e passou por dois adversários antes de devolver a bola. A tabela rápida desmontou por completo a defesa nigeriana.
+          </p>
+
+          <p class="news-text">
+            Utilizando a "Zona Dourada" de Chigiri, Reo posicionou-se estrategicamente no ponto ideal para finalização. Recebeu a bola e executou com precisão cirúrgica, colocando-a no fundo da rede.
+          </p>
+
+          <p class="news-text">
+            A celebração foi intensa, com os jogadores reconhecendo a genialidade da jogada. Reo demostrou mais uma vez sua versatilidade e capacidade de execução em momentos decisivos.
+          </p>
+
+
+
+
+              <div class="news-divider"></div>
+
+              <!-- NOTÍCIA 4 - GOL DO RIN -->
+              <article class="news-article">
+                <h2 class="news-title">ITOSHI RIN Marca o Terceiro gol do Japão contra Nigéria </h2>
+
+                <div class="news-content">
+                  <p class="lead-text">
+                    Em jogada magistral, Rin entra em fluxo e marca o terceiro gol japonês com chute técnico impressionante.
+                  </p>
+
+                  <p class="news-text">
+                    O capítulo 320 de Blue Lock nos presenteou com um momento histórico: Itoshi Rin consolidando a vitória japonesa com um gol de rara beleza técnica. Após passe preciso de Bachira, Rin demonstrou toda sua classe finalizando com maestria.
+                  </p>
+
+                  <div class="news-images">
+                    <div class="news-image">
+                      <img src="https://mugiwarasoficial.com/wp-content/uploads/WP-manga/data/manga_689cf6933af5c/baf9d15803cf039f76a39d6c9eeda024/014.png" alt="Passe de Bachira">
+                      <div class="news-image-caption">Bachira executa passe perfeito para Rin</div>
+                    </div>
+                    <div class="news-image">
+                      <img src="https://mugiwarasoficial.com/wp-content/uploads/WP-manga/data/manga_689cf6933af5c/baf9d15803cf039f76a39d6c9eeda024/016.png" alt="Rin em fluxo">
+                      <div class="news-image-caption">Itoshi Rin alcança Estado de fluxo</div>
+                    </div>
+                    <div class="news-image">
+                      <img src="https://mugiwarasoficial.com/wp-content/uploads/WP-manga/data/manga_689cf6933af5c/baf9d15803cf039f76a39d6c9eeda024/017.png" alt="Gol de Rin">
+                      <div class="news-image-caption">Chute de voleio que surpreende o goleiro e marca um golaço</div>
+                    </div>
+                    <div class="news-image">
+                      <img src="https://mugiwarasoficial.com/wp-content/uploads/WP-manga/data/manga_689cf6933af5c/baf9d15803cf039f76a39d6c9eeda024/018.png" alt="Celebração do gol">
+                      <div class="news-image-caption">Rin fala sobre limpar seus impedimentos para superar Isagi </div>
+                    </div>
+                  </div>
+
+                   
+                  <p class="news-text">
+                    A jogada começou com Bachira chutando ao gol porém jogador da Nigéria defende coma bola sobrando para Yo Hiori que chuta para o gol novamente o goleiro defende e a bola vai Hyoma Chigiri que chuta porém Onazi defende de cara sobrando para o Japão que após algumas trocas de passes Meguru Bachira encontra o passe para Rin Itoshi que após superar Isagi Yoichi ele chuta e marca gol
+                  </p>
+                  </p>
+
+                  <p class="news-text">
+                    Com este gol, Rin não apenas garantiu o 3x0 para o Japão, mas também reafirmou sua posição como um dos atacantes mais letais do projeto Blue Lock. Uma demonstração de que, quando se trata de finalização, poucos podem rivalizar com a frieza e perfeição de Itoshi Rin.
+                  </p>
+                </div>
+              </article>
+
+            </div>
+          </main>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <small>Blue Lock  • Edição especial • <a href="index.html">Voltar à página principal</a></small>
+    </div>
+  </footer>
+
+  <script>
+    // Tema com persistência
+    const themeBtn = document.getElementById('themeToggle');
+    const themeLabel = themeBtn.querySelector('span');
+    const stored = localStorage.getItem('bluelock-theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    function applyTheme(mode){
+      document.body.classList.toggle('dark-mode', mode === 'dark');
+      themeLabel.textContent = mode === 'dark' ? 'Modo claro' : 'Modo escuro';
+      themeBtn.firstElementChild.className = mode === 'dark' ? 'bi bi-sun' : 'bi bi-moon-stars';
+      localStorage.setItem('bluelock-theme', mode);
+    }
+    applyTheme(stored ? stored : (prefersDark ? 'dark' : 'light'));
+    themeBtn.addEventListener('click', ()=>{
+      const now = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
+      applyTheme(now);
+    });
+  </script>
+</body>
+</html>
+<script>
+  // Função para abrir imagem em tela cheia
+  function openFullscreen(imgSrc) {
+    // Cria o overlay
+    const overlay = document.createElement("div");
+    overlay.style.position = "fixed";
+    overlay.style.top = "0";
+    overlay.style.left = "0";
+    overlay.style.width = "100%";
+    overlay.style.height = "100%";
+    overlay.style.background = "rgba(0,0,0,0.9)";
+    overlay.style.display = "flex";
+    overlay.style.alignItems = "center";
+    overlay.style.justifyContent = "center";
+    overlay.style.zIndex = "9999";
+    overlay.style.cursor = "zoom-out";
+
+    // Cria a imagem
+    const img = document.createElement("img");
+    img.src = imgSrc;
+    img.style.maxWidth = "95%";
+    img.style.maxHeight = "95%";
+    img.style.boxShadow = "0 0 25px rgba(255,255,255,0.4)";
+    img.style.borderRadius = "6px";
+
+    // Fecha ao clicar
+    overlay.addEventListener("click", () => overlay.remove());
+
+    overlay.appendChild(img);
+    document.body.appendChild(overlay);
+  }
+
+  // Adiciona evento em todas as imagens da notícia
+  document.querySelectorAll(".news-image img").forEach(img => {
+    img.style.cursor = "zoom-in";
+    img.addEventListener("click", () => openFullscreen(img.src));
+  });
+
+</script>
